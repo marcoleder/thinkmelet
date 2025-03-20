@@ -57,6 +57,11 @@ export default async function Index() {
                     >
                         Learn more
                     </LinkButton>
+                    <img
+                        src="https://www.svgrepo.com/show/126514/man-thinking.svg"
+                        style={{ width: 450 , marginTop: -220, marginRight: 50}}
+                        alt="Man Thinking"
+                    />
                 </div>
             </Container>
 
