@@ -87,6 +87,7 @@ export const WhiteboardNote = memo(
               onClick={onDelete}
               variant="subtle"
             />
+            <h2>{props.title}</h2>
             <div className={styles.presence}>
               {selectedBy ? (
                 <Avatar

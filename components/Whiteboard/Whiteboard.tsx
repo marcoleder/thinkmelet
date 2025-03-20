@@ -11,11 +11,12 @@ import {
 import clsx from "clsx";
 import { nanoid } from "nanoid";
 import { useSession } from "next-auth/react";
-import {
+import React, {
   ChangeEvent,
   ComponentProps,
   FocusEvent,
   PointerEvent,
+  useCallback,
   useRef,
   useState,
 } from "react";
@@ -27,6 +28,10 @@ import { useBoundingClientRectRef } from "@/utils";
 import { Cursors } from "../Cursors";
 import { WhiteboardNote } from "./WhiteboardNote";
 import styles from "./Whiteboard.module.css";
+import { Coordinates } from "@/types/coordinates";
+import Footer from "@/librechat/client/src/components/Auth/Footer";
+import { templateNotes } from "@/data/testPromptData";
+import { Note } from "@/types/note";
 
 interface Props extends ComponentProps<"div"> {
   currentUser: Liveblocks["UserMeta"]["info"] | null;
@@ -72,6 +77,8 @@ function LiveblocksWhiteboard({
 
   // Info about element being dragged
   const [isDragging, setIsDragging] = useState(false);
+  let xSpawnCoordinate = -300;
+  let ySpawnCoordinate = 50;
   const dragInfo = useRef<{
     element: Element;
     noteId: string;
@@ -79,22 +86,33 @@ function LiveblocksWhiteboard({
   } | null>();
 
   // Insert a new note onto the canvas
-  const insertNote = useMutation(({ storage, self }) => {
+  const insertNote = useMutation(({ storage, self }, givenNote?: Note) => {
     if (!self.canWrite) {
       return;
     }
+    xSpawnCoordinate += 400;
+    if (xSpawnCoordinate > 1300) {
+      xSpawnCoordinate = 100;
+      xSpawnCoordinate += getRandomInt(120);
+      ySpawnCoordinate += 120;
+      if (ySpawnCoordinate > 410) {
+        ySpawnCoordinate = 50;
+        ySpawnCoordinate += getRandomInt(30);
+      }
+    }
+    console.log("x + y", xSpawnCoordinate, ySpawnCoordinate);
 
     const noteId = nanoid();
     const note = new LiveObject({
-      x: getRandomInt(300),
-      y: getRandomInt(300),
-      text: "",
+      x: xSpawnCoordinate,
+      y: ySpawnCoordinate,
+      title: givenNote?.title ? givenNote?.title : "",
+      text: givenNote?.text ? givenNote?.text : "",
       selectedBy: null,
       id: noteId,
     });
     storage.get("notes").set(noteId, note);
   }, []);
-
   // Delete a note
   const handleNoteDelete = useMutation(({ storage, self }, noteId) => {
     if (!self.canWrite) {
@@ -131,8 +149,8 @@ function LiveblocksWhiteboard({
     // Get position of cursor on note, to use as an offset when moving notes
     const rect = element.getBoundingClientRect();
     const offset = {
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
+      x: translate.x + e.clientX - rect.left,
+      y: translate.y + e.clientY - rect.top,
     };
 
     dragInfo.current = { noteId, element, offset };
@@ -182,38 +200,108 @@ function LiveblocksWhiteboard({
     history.resume();
   }
 
-  return (
-    <div
-      className={clsx(className, styles.canvas)}
-      onPointerMove={handleCanvasPointerMove}
-      onPointerUp={handleCanvasPointerUp}
-      ref={canvasRef}
-      style={{ pointerEvents: canWrite ? undefined : "none", ...style }}
-      {...props}
-    >
-      <Cursors element={canvasRef} />
-      {
-        /*
-         * Iterate through each note in the LiveMap and render it as a note
-         */
-        noteIds.map((id) => (
-          <WhiteboardNote
-            dragged={id === dragInfo?.current?.noteId}
-            id={id}
-            key={id}
-            onBlur={(e) => handleNoteBlur(e, id)}
-            onChange={(e) => handleNoteChange(e, id)}
-            onDelete={() => handleNoteDelete(id)}
-            onFocus={(e) => handleNoteFocus(e, id)}
-            onPointerDown={(e) => handleNotePointerDown(e, id)}
-          />
-        ))
-      }
+  const [isPaning, setIsPaning] = useState(false);
+  const [origin, setOrigin] = useState<Coordinates>({ x: 0, y: 0 });
+  const [translate, setTranslate] = useState<Coordinates>({ x: 0, y: 0 });
+  const [startTranslate, setStartTranslate] = useState<Coordinates>({
+    x: 0,
+    y: 0,
+  });
+  const [zoomLevel, setZoomLevel] = useState(1);
+  //
+  const handleMouseDown = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    const target = event.target as HTMLElement;
+    if (target.closest("[data-note]") || target.closest(`.${styles.toolbar}`)) {
+      return;
+    }
+    setIsPaning(true);
+    setOrigin({ x: event.clientX, y: event.clientY });
+    setStartTranslate(translate);
+  };
+  //
+  const handleMouseMove = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    if (!isPaning) return;
+    const deltaX = event.clientX - origin.x;
+    const deltaY = event.clientY - origin.y;
+    setTranslate({
+      x: startTranslate.x + deltaX,
+      y: startTranslate.y + deltaY,
+    });
+  };
+  //
+  const handleMouseUp = () => {
+    setIsPaning(false);
+  };
+  //
+  const handleWheel = useCallback((event: React.WheelEvent) => {
+    event.preventDefault();
 
+    setZoomLevel((prevZoom) => {
+      if (event.deltaY < 0) {
+        return Math.min(prevZoom * 1.1, 4);
+      } else {
+        return Math.max(prevZoom / 1.1, 0.2);
+      }
+    });
+  }, []);
+  //
+  //
+  return (
+    <>
+      <div
+        className={clsx(className, styles.whiteboardWrapper)}
+        style={{ cursor: isPaning ? "grabbing" : "grab" }}
+      >
+        <div
+          className={clsx(className, styles.whiteboard)}
+          onPointerMove={handleCanvasPointerMove}
+          onPointerUp={handleCanvasPointerUp}
+          ref={canvasRef}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseUp}
+          onWheel={handleWheel}
+          style={{
+            pointerEvents: canWrite ? undefined : "none",
+            ...style,
+            transform: `translate(${translate.x}px, ${translate.y}px)`,
+            transition: isPaning ? "none" : "transform 0.1s ease-out",
+          }}
+          {...props}
+        >
+          <Cursors element={canvasRef} />
+          {
+            /*
+             * Iterate through each note in the LiveMap and render it as a note
+             */
+            noteIds.map((id) => (
+              <WhiteboardNote
+                dragged={id === dragInfo?.current?.noteId}
+                id={id}
+                key={id}
+                onBlur={(e) => handleNoteBlur(e, id)}
+                onChange={(e) => handleNoteChange(e, id)}
+                onDelete={() => handleNoteDelete(id)}
+                onFocus={(e) => handleNoteFocus(e, id)}
+                onPointerDown={(e) => handleNotePointerDown(e, id)}
+              />
+            ))
+          }
+        </div>
+      </div>
       {canWrite && (
         <div className={styles.toolbar}>
           <Tooltip content="Add note" sideOffset={16}>
-            <Button icon={<PlusIcon />} onClick={insertNote} variant="subtle" />
+            <Button
+              icon={<PlusIcon />}
+              onClick={() => insertNote()}
+              variant="subtle"
+            />
           </Tooltip>
           <Tooltip content="Undo" sideOffset={16}>
             <Button
@@ -231,9 +319,18 @@ function LiveblocksWhiteboard({
               variant="subtle"
             />
           </Tooltip>
+          <Tooltip content="templates" sideOffset={16}>
+            <Button
+              icon={<PlusIcon />}
+              onClick={() => {
+                templateNotes.forEach((note) => insertNote(note));
+              }}
+              variant="subtle"
+            />
+          </Tooltip>
         </div>
       )}
-    </div>
+    </>
   );
 }
 
