@@ -1,0 +1,182 @@
+2025-03-20T01:39:31.836Z error: [initializeS3] AWS_REGION is not set. Cannot initialize S3.
+2025-03-20T01:39:31.969Z info: [Optional] Redis not initialized. Note: Redis support is experimental.
+2025-03-20T01:39:32.535Z info: Connected to MongoDB
+2025-03-20T01:39:32.583Z error: An error occurred while fixing Token indexes: ns does not exist: LibreChat.tokens
+2025-03-20T01:39:32.632Z debug: [indexSync] There are 0 messages and 0 indexed
+2025-03-20T01:39:32.633Z debug: [indexSync] There are 0 convos and 0 indexed
+2025-03-20T01:39:32.659Z error: Config file YAML format is invalid: ENOENT: no such file or directory, open '/app/librechat.yaml'
+2025-03-20T01:39:32.660Z warn: Default value for CREDS_KEY is being used.
+2025-03-20T01:39:32.660Z warn: Default value for CREDS_IV is being used.
+2025-03-20T01:39:32.661Z warn: Default value for JWT_SECRET is being used.
+2025-03-20T01:39:32.661Z warn: Default value for JWT_REFRESH_SECRET is being used.
+2025-03-20T01:39:32.661Z info: Please replace any default secret values.
+2025-03-20T01:39:32.661Z info: ​
+
+    For your convenience, use this tool to generate your own secret values:
+    https://www.librechat.ai/toolkit/creds_generator
+
+    ​
+2025-03-20T01:39:32.801Z info: RAG API is running and reachable at http://rag_api:8000.
+2025-03-20T01:39:32.810Z info: No changes needed for 'USER' role permissions
+2025-03-20T01:39:32.810Z info: No changes needed for 'ADMIN' role permissions
+2025-03-20T01:39:32.816Z info: Server listening on all interfaces at port 3080. Use http://localhost:3080 to access it
+2025-03-20T01:41:15.938Z debug: [requireLocalAuth] Error: No user
+2025-03-20T01:41:23.580Z debug: [validateJson] files
+["\"Ai_PDF.json\"","\"BrowserOp.json\"","\"Dr_Thoths_Tarot.json\"","\"DreamInterpreter.json\"","\"VoxScript.json\"","\"askyourpdf.json\"","\"drink_maestro.json\"","\"earthImagesAndVisualizations.json\"","\"image_prompt_enhancer.json\"","\"qrCodes.json\"","\"scholarai.json\"","\"uberchord.json\"","\"web_search.json\""]
+2025-03-20T01:42:53.752Z error: [/agents/:undefined] Error retrieving agent during build options step Cannot read properties of null (reading 'author')
+2025-03-20T01:42:53.752Z error: [handleAbortError] AI response error; aborting request: Agent not found
+2025-03-20T01:42:53.753Z warn: Invalid conversation ID: undefined
+2025-03-20T01:42:53.753Z info: ---`saveMessage` context: undefined
+2025-03-20T01:42:53.753Z info: ---Invalid conversation ID Params: {
+  "messageId": "18a2e5d2-d8e9-4ff2-b4a8-6134eaafe4b5",
+  "parentMessageId": "00000000-0000-0000-0000-000000000000... [truncated]
+2025-03-20T01:43:41.480Z error: [logoutUser] Failed to destroy session. Cannot read properties of undefined (reading 'destroy')
+2025-03-20T01:43:57.170Z debug: [indexSync] Clearing sync timeouts before exiting...
+2025-03-20T01:48:50.179Z error: [initializeS3] AWS_REGION is not set. Cannot initialize S3.
+2025-03-20T01:48:50.280Z info: [Optional] Redis not initialized. Note: Redis support is experimental.
+2025-03-20T01:48:50.796Z info: Connected to MongoDB
+2025-03-20T01:48:50.821Z debug: Existing Token Indexes: [
+  {
+    "v": 2,
+    "key": {
+      "_id": 1
+    },
+    "name": "_id_"
+  },
+  {
+    "v": 2,
+    "key": {
+      "expiresAt": 1
+    },
+    "name": "expiresAt_1",
+    "background": true,
+    "expireAfterSeconds": 0
+  }
+]
+2025-03-20T01:48:50.821Z debug: No unwanted Token indexes found.
+2025-03-20T01:48:50.867Z debug: [indexSync] There are 0 messages and 0 indexed
+2025-03-20T01:48:50.867Z debug: [indexSync] There are 0 convos and 0 indexed
+2025-03-20T01:48:50.877Z error: Config file YAML format is invalid: ENOENT: no such file or directory, open '/app/librechat.yaml'
+2025-03-20T01:48:50.878Z warn: Default value for CREDS_KEY is being used.
+2025-03-20T01:48:50.878Z warn: Default value for CREDS_IV is being used.
+2025-03-20T01:48:50.878Z warn: Default value for JWT_SECRET is being used.
+2025-03-20T01:48:50.878Z warn: Default value for JWT_REFRESH_SECRET is being used.
+2025-03-20T01:48:50.879Z info: Please replace any default secret values.
+2025-03-20T01:48:50.879Z info: ​
+
+    For your convenience, use this tool to generate your own secret values:
+    https://www.librechat.ai/toolkit/creds_generator
+
+    ​
+2025-03-20T01:48:50.992Z info: RAG API is running and reachable at http://rag_api:8000.
+2025-03-20T01:48:50.998Z info: No changes needed for 'USER' role permissions
+2025-03-20T01:48:50.999Z info: No changes needed for 'ADMIN' role permissions
+2025-03-20T01:48:51.004Z info: Server listening on all interfaces at port 3080. Use http://localhost:3080 to access it
+2025-03-20T01:49:34.317Z debug: [validateJson] files
+["\"Ai_PDF.json\"","\"BrowserOp.json\"","\"Dr_Thoths_Tarot.json\"","\"DreamInterpreter.json\"","\"VoxScript.json\"","\"askyourpdf.json\"","\"drink_maestro.json\"","\"earthImagesAndVisualizations.json\"","\"image_prompt_enhancer.json\"","\"qrCodes.json\"","\"scholarai.json\"","\"uberchord.json\"","\"web_search.json\""]
+2025-03-20T01:50:05.334Z debug: [AskController]
+{
+  text: "sdf",
+  conversationId: null,
+  endpoint: "openAI",
+  resendFiles: true,
+    modelOptions.model: "gpt-4o-mini",
+  modelsConfig: "exists",
+}
+2025-03-20T01:50:05.443Z debug: [BaseClient] Loading history:
+{
+  conversationId: "abb3e57e-d86f-427a-8d55-58ec47979b8b",
+  parentMessageId: "00000000-0000-0000-0000-000000000000",
+}
+2025-03-20T01:50:05.543Z debug: [BaseClient] Context Count (1/2)
+{
+  remainingContextTokens: 127491,
+  maxContextTokens: 127500,
+}
+2025-03-20T01:50:05.543Z debug: [BaseClient] Context Count (2/2)
+{
+  remainingContextTokens: 127491,
+  maxContextTokens: 127500,
+}
+2025-03-20T01:50:05.543Z debug: [BaseClient] tokenCountMap:
+{
+  ea1bb6cd-e95f-4a31-98ed-3eba73512bb7: 6,
+}
+2025-03-20T01:50:05.543Z debug: [BaseClient]
+{
+  promptTokens: 9,
+  remainingContextTokens: 127491,
+  payloadSize: 1,
+  maxContextTokens: 127500,
+}
+2025-03-20T01:50:05.543Z debug: [BaseClient] tokenCountMap
+{
+  ea1bb6cd-e95f-4a31-98ed-3eba73512bb7: 6,
+  instructions: undefined,
+}
+2025-03-20T01:50:05.543Z debug: [BaseClient] userMessage
+{
+  messageId: "ea1bb6cd-e95f-4a31-98ed-3eba73512bb7",
+  parentMessageId: "00000000-0000-0000-0000-000000000000",
+  conversationId: "abb3e57e-d86f-427a-8d55-58ec47979b8b",
+  sender: "User",
+  text: "sdf",
+  isCreatedByUser: true,
+  tokenCount: 6,
+}
+2025-03-20T01:50:05.544Z debug: [OpenAIClient] chatCompletion
+{
+  baseURL: "https://api.openai.com/v1",
+    modelOptions.model: "gpt-4o-mini",
+    modelOptions.user: "67db7229f78c82945d4021a0",
+    modelOptions.stream: true,
+    // 1 message(s)
+    modelOptions.messages: [{"role":"user","content":"sdf"}],
+}
+2025-03-20T01:50:05.550Z debug: Making request to https://api.openai.com/v1/chat/completions
+2025-03-20T01:50:05.577Z debug: [saveConvo] api/app/clients/BaseClient.js - saveMessageToDatabase #saveConvo
+2025-03-20T01:50:06.167Z warn: [OpenAIClient.chatCompletion][stream] API error
+2025-03-20T01:50:06.168Z error
+2025-03-20T01:50:06.170Z error: [handleAbortError] AI response error; aborting request: 401 Incorrect API key provided: abcd. You can find your API key at https://platform.openai.com... [truncated]
+2025-03-20T01:50:06.178Z debug: [AskController] Request closed
+2025-03-20T01:50:45.171Z debug: [indexSync] Clearing sync timeouts before exiting...
+2025-03-20T02:24:20.004Z error: [initializeS3] AWS_REGION is not set. Cannot initialize S3.
+2025-03-20T02:24:20.158Z info: [Optional] Redis not initialized. Note: Redis support is experimental.
+2025-03-20T02:24:20.671Z info: Connected to MongoDB
+2025-03-20T02:24:20.695Z debug: Existing Token Indexes: [
+  {
+    "v": 2,
+    "key": {
+      "_id": 1
+    },
+    "name": "_id_"
+  },
+  {
+    "v": 2,
+    "key": {
+      "expiresAt": 1
+    },
+    "name": "expiresAt_1",
+    "background": true,
+    "expireAfterSeconds": 0
+  }
+]
+2025-03-20T02:24:20.695Z debug: No unwanted Token indexes found.
+2025-03-20T02:24:20.733Z debug: [indexSync] There are 2 messages and 2 indexed
+2025-03-20T02:24:20.733Z debug: [indexSync] There are 1 convos and 1 indexed
+2025-03-20T02:24:20.744Z error: Config file YAML format is invalid: ENOENT: no such file or directory, open '/app/librechat.yaml'
+2025-03-20T02:24:20.744Z warn: Default value for CREDS_KEY is being used.
+2025-03-20T02:24:20.744Z warn: Default value for CREDS_IV is being used.
+2025-03-20T02:24:20.745Z warn: Default value for JWT_SECRET is being used.
+2025-03-20T02:24:20.745Z warn: Default value for JWT_REFRESH_SECRET is being used.
+2025-03-20T02:24:20.745Z info: Please replace any default secret values.
+2025-03-20T02:24:20.745Z info: ​
+
+    For your convenience, use this tool to generate your own secret values:
+    https://www.librechat.ai/toolkit/creds_generator
+
+    ​
+2025-03-20T02:24:20.939Z info: RAG API is running and reachable at http://rag_api:8000.
+2025-03-20T02:24:20.946Z info: No changes needed for 'USER' role permissions
+2025-03-20T02:24:20.946Z info: No changes needed for 'ADMIN' role permissions
+2025-03-20T02:24:20.951Z info: Server listening on all interfaces at port 3080. Use http://localhost:3080 to access it
