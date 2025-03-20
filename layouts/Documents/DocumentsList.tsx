@@ -137,9 +137,7 @@ export function DocumentsList({
             initialValue="all"
             items={[
               { value: "all", title: "All" },
-              { value: "text", title: "Text" },
               { value: "whiteboard", title: "Whiteboard" },
-              { value: "canvas", title: "Canvas" },
             ]}
             onChange={(value: "all" | DocumentType) => {
               setDocumentType(value);
