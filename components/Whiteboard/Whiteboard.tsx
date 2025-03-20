@@ -8,6 +8,13 @@ import {
   useSelf,
   useStorage,
 } from "@liveblocks/react/suspense";
+import {
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+} from "@mui/material";
+import Typography from "@mui/material/Typography";
 import clsx from "clsx";
 import { nanoid } from "nanoid";
 import { useSession } from "next-auth/react";
@@ -20,18 +27,18 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { PlusIcon, RedoIcon, UndoIcon } from "@/icons";
+import { templateNotes } from "@/data/testPromptData";
+import { CrossIcon, PlusIcon, RedoIcon, UndoIcon } from "@/icons";
 import { Button } from "@/primitives/Button";
 import { DocumentSpinner } from "@/primitives/Spinner";
 import { Tooltip } from "@/primitives/Tooltip";
+import { Coordinates } from "@/types/coordinates";
+import { Note } from "@/types/note";
 import { useBoundingClientRectRef } from "@/utils";
 import { Cursors } from "../Cursors";
+import { BootstrapDialog } from "./Dialog";
 import { WhiteboardNote } from "./WhiteboardNote";
 import styles from "./Whiteboard.module.css";
-import { Coordinates } from "@/types/coordinates";
-import Footer from "@/librechat/client/src/components/Auth/Footer";
-import { templateNotes } from "@/data/testPromptData";
-import { Note } from "@/types/note";
 
 interface Props extends ComponentProps<"div"> {
   currentUser: Liveblocks["UserMeta"]["info"] | null;
@@ -100,7 +107,6 @@ function LiveblocksWhiteboard({
         ySpawnCoordinate += getRandomInt(30);
       }
     }
-    console.log("x + y", xSpawnCoordinate, ySpawnCoordinate);
 
     const noteId = nanoid();
     const note = new LiveObject({
@@ -200,6 +206,10 @@ function LiveblocksWhiteboard({
     history.resume();
   }
 
+  const [displayedNoteTitle, setDisplayedNoteTitle] = useState<string>("");
+  const [displayedNoteDescription, setDisplayedNoteDescription] =
+    useState<string>("");
+  //
   const [isPaning, setIsPaning] = useState(false);
   const [origin, setOrigin] = useState<Coordinates>({ x: 0, y: 0 });
   const [translate, setTranslate] = useState<Coordinates>({ x: 0, y: 0 });
@@ -209,6 +219,14 @@ function LiveblocksWhiteboard({
   });
   const [zoomLevel, setZoomLevel] = useState(1);
   //
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
   const handleMouseDown = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
@@ -231,6 +249,10 @@ function LiveblocksWhiteboard({
       x: startTranslate.x + deltaX,
       y: startTranslate.y + deltaY,
     });
+  };
+  //
+  const displayNoteOverlay = () => {
+    console.log("something");
   };
   //
   const handleMouseUp = () => {
@@ -289,6 +311,9 @@ function LiveblocksWhiteboard({
                 onDelete={() => handleNoteDelete(id)}
                 onFocus={(e) => handleNoteFocus(e, id)}
                 onPointerDown={(e) => handleNotePointerDown(e, id)}
+                showOverlay={handleClickOpen}
+                setOverlayTitle={setDisplayedNoteTitle}
+                setOverlayText={setDisplayedNoteDescription}
               />
             ))
           }
@@ -330,6 +355,33 @@ function LiveblocksWhiteboard({
           </Tooltip>
         </div>
       )}
+      <BootstrapDialog
+        onClose={handleClose}
+        aria-labelledby="customized-dialog-title"
+        open={open}
+      >
+        <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+          {displayedNoteTitle}
+        </DialogTitle>
+        <IconButton
+          aria-label="close"
+          onClick={handleClose}
+          sx={(theme) => ({
+            position: "absolute",
+            right: 8,
+            top: 8,
+            color: theme.palette.grey[500],
+          })}
+        >
+          <CrossIcon />
+        </IconButton>
+        <DialogContent dividers>{displayedNoteDescription}</DialogContent>
+        <DialogActions>
+          <Button autoFocus onClick={handleClose}>
+            Save changes
+          </Button>
+        </DialogActions>
+      </BootstrapDialog>
     </>
   );
 }

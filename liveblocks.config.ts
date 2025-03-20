@@ -5,6 +5,7 @@ export type Note = LiveObject<{
   x: number;
   y: number;
   text: string;
+  title: string;
   selectedBy: Liveblocks["UserMeta"]["info"] | null;
   id: string;
 }>;

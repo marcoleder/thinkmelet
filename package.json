@@ -10,6 +10,8 @@
     "typecheck": "tsc --project tsconfig.json --noEmit"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
     "@liveblocks/client": "^2.20.0",
     "@liveblocks/core": "^2.20.0",
     "@liveblocks/emails": "^2.20.0",
@@ -48,6 +50,7 @@
     "tldraw": "^3.4.1"
   },
   "devDependencies": {
+    "@mui/material": "^6.4.8",
     "@types/base-64": "^1.0.0",
     "@types/node": "^18.11.9",
     "@types/react": "^18.3.3",

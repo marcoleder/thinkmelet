@@ -10,10 +10,12 @@ import {
   useCallback,
   useRef,
 } from "react";
-import { CrossIcon } from "@/icons";
+import { CheckboxIcon, CrossIcon } from "@/icons";
 import { Avatar } from "@/primitives/Avatar";
 import { Button } from "@/primitives/Button";
 import styles from "./WhiteboardNote.module.css";
+import { ExpandIcon } from "@/icons/Expand";
+import { Note } from "@/types/note";
 
 interface Props
   extends Omit<
@@ -27,6 +29,9 @@ interface Props
   onDelete: () => void;
   onFocus: FocusEventHandler<HTMLTextAreaElement>;
   onPointerDown: PointerEventHandler<HTMLDivElement>;
+  showOverlay: Function;
+  setOverlayTitle: Function;
+  setOverlayText: Function;
 }
 
 export const WhiteboardNote = memo(
@@ -40,6 +45,9 @@ export const WhiteboardNote = memo(
     onBlur,
     style,
     className,
+    showOverlay,
+    setOverlayTitle,
+    setOverlayText,
     ...props
   }: Props) => {
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -48,6 +56,12 @@ export const WhiteboardNote = memo(
     const handleDoubleClick = useCallback(() => {
       textAreaRef.current?.focus();
     }, []);
+    const expandNote = () => {
+      setOverlayTitle(title);
+      console.log("hello there", text);
+      setOverlayText(text);
+      showOverlay();
+    };
 
     const handleKeyDown = useCallback(
       (event: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -62,7 +76,7 @@ export const WhiteboardNote = memo(
       return null;
     }
 
-    const { x, y, text, selectedBy } = note;
+    const { x, y, text, title, selectedBy } = note;
 
     return (
       <div
@@ -87,7 +101,13 @@ export const WhiteboardNote = memo(
               onClick={onDelete}
               variant="subtle"
             />
-            <h2>{props.title}</h2>
+            <h2>{title}</h2>
+            <Button
+              className={styles.deleteButton}
+              icon={<ExpandIcon />}
+              onClick={expandNote}
+              variant="subtle"
+            />
             <div className={styles.presence}>
               {selectedBy ? (
                 <Avatar
