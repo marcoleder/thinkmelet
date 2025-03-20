@@ -68,7 +68,7 @@ export const askGpt = async (motivation, clueless, hesitant, interaction) => {
 
     // Build the payload including the response_format parameter for structured output
     const payload = {
-        model: "gpt-4o",
+        model: "llama-3.2-11b-vision-instruct",
         messages: [
             {role: "system", content: "You are ChatGPT, a helpful assistant."},
             {role: "user", content: JSON.stringify(prompt)}
@@ -85,7 +85,7 @@ export const askGpt = async (motivation, clueless, hesitant, interaction) => {
     };
 
     // Send API request to ChatGPT
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    const response = await fetch("https://ai.marcoleder.ch/v1/chat/completions", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

@@ -37,8 +37,7 @@ export function QuizComponent({ onAnswerSelected }) {
                             key={idx}
                             variant="outlined"
                             onClick={() => handleAnswerClick(answer)}
-                            sx={{ mb: 1 }}
-
+                            sx={{ mb: 1, textTransform: "none"}}
                         >
                             {answer.answerText}
                         </Button>

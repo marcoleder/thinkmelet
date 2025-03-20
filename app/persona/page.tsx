@@ -1,24 +1,43 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TriangleVisualization } from "@/app/persona/TriangleComponent";
 import { Box, Button, Typography } from "@mui/material";
 import QuizComponent from "@/app/persona/quiz";
 import { askGpt } from "@/app/persona/llmInteraction/LlmInteraction";
 
 export function findPersona() {
-    const [motivated, setMotivated] = useState(100);
-    const [clueless, setClueless] = useState(100);
-    const [hesitant, setHesitant] = useState(100);
-
-    // Log for the latest modification details
-    const [modificationLog, setModificationLog] = useState("");
+    // Initialize state from localStorage if available, otherwise default to 100 or empty string.
+    const [motivated, setMotivated] = useState(() => {
+        const stored = localStorage.getItem("motivated");
+        return stored ? parseInt(stored, 10) : 100;
+    });
+    const [clueless, setClueless] = useState(() => {
+        const stored = localStorage.getItem("clueless");
+        return stored ? parseInt(stored, 10) : 100;
+    });
+    const [hesitant, setHesitant] = useState(() => {
+        const stored = localStorage.getItem("hesitant");
+        return stored ? parseInt(stored, 10) : 100;
+    });
+    const [modificationLog, setModificationLog] = useState(() => {
+        const stored = localStorage.getItem("modificationLog");
+        return stored ? stored : "";
+    });
 
     const [showTriangle, setShowTriangle] = useState(true);
 
     const toggleTriangle = () => {
         setShowTriangle((prev) => !prev);
     };
+
+    // Update localStorage whenever any of the tracked states change
+    useEffect(() => {
+        localStorage.setItem("motivated", motivated);
+        localStorage.setItem("clueless", clueless);
+        localStorage.setItem("hesitant", hesitant);
+        localStorage.setItem("modificationLog", modificationLog);
+    }, [motivated, clueless, hesitant, modificationLog]);
 
     const handleAnswerSelected = (answer) => {
         // Define adjustment values
@@ -83,9 +102,7 @@ export function findPersona() {
     };
 
     // Function to simulate a prompt interaction and apply modifications
-    const simulatePrompt = async () => {
-        // Sample interaction text; in a real scenario, this might come from user input
-        const interaction = "I would like to explore innovative strategies to boost company growth.";
+    const simulatePrompt = async (interaction) => {
 
         // Capture current state values before modification
         const currentMotivated = motivated;
@@ -170,12 +187,10 @@ export function findPersona() {
                     motivated={motivated}
                     clueless={clueless}
                     hesitant={hesitant}
-                    reason={modificationLog} // passed as the "reason" field
+                    reason={modificationLog}
+                    buttonPress={simulatePrompt}// passed as the "reason" field
                 />
             )}
-            <Button onClick={simulatePrompt} variant="contained">
-                Simulate prompt
-            </Button>
         </Box>
     );
 }
