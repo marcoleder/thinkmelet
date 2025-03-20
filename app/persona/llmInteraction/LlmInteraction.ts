@@ -68,7 +68,7 @@ export const askGpt = async (motivation, clueless, hesitant, interaction) => {
 
     // Build the payload including the response_format parameter for structured output
     const payload = {
-        model: "llama-3.2-11b-vision-instruct",
+        model: "gemma-3-27b-it",
         messages: [
             {role: "system", content: "You are ChatGPT, a helpful assistant."},
             {role: "user", content: JSON.stringify(prompt)}
