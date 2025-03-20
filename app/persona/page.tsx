@@ -1,8 +1,7 @@
+"use client";
 
-    "use client";
-
-import React, {useState} from "react";
-import TriangleComponent, {TriangleVisualization} from "@/app/persona/TriangleComponent";
+import React, { useState } from "react";
+import TriangleComponent, { TriangleVisualization } from "@/app/persona/TriangleComponent";
 import {
     Typography,
     Button,
@@ -10,7 +9,8 @@ import {
     CardContent,
     RadioGroup,
     FormControlLabel,
-    Radio, Box,
+    Radio,
+    Box,
 } from "@mui/material";
 import QuizComponent from "@/app/persona/quiz";
 
@@ -19,7 +19,7 @@ export function findPersona() {
     const [clueless, setClueless] = useState(100);
     const [hesitant, setHesitant] = useState(100);
 
-    // Optional: log the latest modification details (could also be handled in the Triangle component)
+    // Log for the latest modification details
     const [modificationLog, setModificationLog] = useState("");
 
     const [showTriangle, setShowTriangle] = useState(true);
@@ -29,92 +29,84 @@ export function findPersona() {
     };
 
     const handleAnswerSelected = (answer) => {
-        // For demonstration, adjust the values based on which persona is pulled.
-        // For example, add 20 points to the selected persona and subtract 10 from the others.
+        // Define adjustment values
         const adjustment = 20;
         const reduction = 10;
-        let newLog = "";
 
+        // Compute new values based on current state
+        let newMotivated = motivated;
+        let newClueless = clueless;
+        let newHesitant = hesitant;
 
         if (answer.pullsToPersona.includes("Motivated")) {
-            setMotivated((prev) => {
-                const newVal = prev + adjustment;
-                newLog += `Motivated increased by ${adjustment}.\n`;
-                return newVal;
-            });
-            setClueless((prev) => {
-                const newVal = Math.max(prev - reduction, 0);
-                newLog += `Clueless decreased by ${reduction}.\n`;
-                return newVal;
-            });
-            setHesitant((prev) => {
-                const newVal = Math.max(prev - reduction, 0);
-                newLog += `Hesitant decreased by ${reduction}.\n`;
-                return newVal;
-            });
+            newMotivated = motivated + adjustment;
+            newClueless = Math.max(clueless - reduction, 0);
+            newHesitant = Math.max(hesitant - reduction, 0);
         } else if (answer.pullsToPersona.includes("Clueless")) {
-            setClueless((prev) => {
-                const newVal = prev + adjustment;
-                newLog += `Clueless increased by ${adjustment}.\n`;
-                return newVal;
-            });
-            setMotivated((prev) => {
-                const newVal = Math.max(prev - reduction, 0);
-                newLog += `Motivated decreased by ${reduction}.\n`;
-                return newVal;
-            });
-            setHesitant((prev) => {
-                const newVal = Math.max(prev - reduction, 0);
-                newLog += `Hesitant decreased by ${reduction}.\n`;
-                return newVal;
-            });
+            newClueless = clueless + adjustment;
+            newMotivated = Math.max(motivated - reduction, 0);
+            newHesitant = Math.max(hesitant - reduction, 0);
         } else if (answer.pullsToPersona.includes("Hesitant")) {
-            setHesitant((prev) => {
-                const newVal = prev + adjustment;
-                newLog += `Hesitant increased by ${adjustment}.\n`;
-                return newVal;
-            });
-            setMotivated((prev) => {
-                const newVal = Math.max(prev - reduction, 0);
-                newLog += `Motivated decreased by ${reduction}.\n`;
-                return newVal;
-            });
-            setClueless((prev) => {
-                const newVal = Math.max(prev - reduction, 0);
-                newLog += `Clueless decreased by ${reduction}.\n`;
-                return newVal;
-            });
+            newHesitant = hesitant + adjustment;
+            newMotivated = Math.max(motivated - reduction, 0);
+            newClueless = Math.max(clueless - reduction, 0);
         }
 
-        // Append reasoning from the selected answer to the log
-        newLog += `Reasoning: ${answer.reason}`;
+        // Calculate old normalized percentages
+        const oldTotal = motivated + clueless + hesitant;
+        const oldMotivatedPct = oldTotal ? (motivated / oldTotal) * 100 : 0;
+        const oldCluelessPct = oldTotal ? (clueless / oldTotal) * 100 : 0;
+        const oldHesitantPct = oldTotal ? (hesitant / oldTotal) * 100 : 0;
+
+        // Calculate new normalized percentages
+        const newTotal = newMotivated + newClueless + newHesitant;
+        const newMotivatedPct = newTotal ? (newMotivated / newTotal) * 100 : 0;
+        const newCluelessPct = newTotal ? (newClueless / newTotal) * 100 : 0;
+        const newHesitantPct = newTotal ? (newHesitant / newTotal) * 100 : 0;
+
+        // Compute changes
+        const deltaMotivated = (newMotivatedPct - oldMotivatedPct).toFixed(0);
+        const deltaClueless = (newCluelessPct - oldCluelessPct).toFixed(0);
+        const deltaHesitant = (newHesitantPct - oldHesitantPct).toFixed(0);
+
+        // Craft the log message showing percentual changes
+        const newLog =
+            `Last change:\n\n` +
+            `Motivated: ${oldMotivatedPct.toFixed(0)}% → ${newMotivatedPct.toFixed(0)}% (Δ ${deltaMotivated}%)\n` +
+            `Clueless: ${oldCluelessPct.toFixed(0)}% → ${newCluelessPct.toFixed(0)}% (Δ ${deltaClueless}%)\n` +
+            `Hesitant: ${oldHesitantPct.toFixed(0)}% → ${newHesitantPct.toFixed(0)}% (Δ ${deltaHesitant}%)\n\n` +
+            `Reasoning: ${answer.reason}`;
+
+        // Update the states with new values
+        setMotivated(newMotivated);
+        setClueless(newClueless);
+        setHesitant(newHesitant);
         setModificationLog(newLog);
     };
 
     return (
-        <Box sx={{p: 2}}>
-            <Typography variant="h4" align="center" sx={{mb: 1}}>
+        <Box sx={{ p: 2 }}>
+            <Typography variant="h4" align="center" sx={{ mb: 1 }}>
                 Persona
             </Typography>
 
             {/* Quiz Component: passes the callback for answer selection */}
-            <QuizComponent onAnswerSelected={handleAnswerSelected}/>
+            <QuizComponent onAnswerSelected={handleAnswerSelected} />
 
             {/* Triangle Visualization: receives the latest persona values and log */}
-            <Button variant="contained" onClick={toggleTriangle} sx={{my: 2}}>
+            <Button variant="contained" onClick={toggleTriangle} sx={{ my: 2 }}>
                 {showTriangle ? "Hide Persona-Finding Process" : "Show Persona-Finding Process"}
             </Button>
-            {showTriangle &&  <TriangleVisualization
-              motivated={motivated}
-              clueless={clueless}
-              hesitant={hesitant}
-              modificationLog={modificationLog}
-            />}
-
-
+            {showTriangle && (
+                <TriangleVisualization
+                    motivated={motivated}
+                    clueless={clueless}
+                    hesitant={hesitant}
+                    reason={modificationLog}  // passed as the "reason" field
+                />
+            )}
         </Box>
     );
 }
 
 export default findPersona;
-

@@ -1,9 +1,9 @@
 "use client";
 
-import React from 'react';
-import { Box, Typography, Paper } from '@mui/material';
+import React from "react";
+import { Box, Typography, Paper } from "@mui/material";
 
-export const TriangleVisualization = ({ motivated, clueless, hesitant, modificationLog }) => {
+export const TriangleVisualization = ({ motivated, clueless, hesitant, reason }) => {
     // Define the vertices of an equilateral triangle (SVG coordinates)
     const vertexMotivated = { x: 150, y: 10 };   // Top vertex - Motivated
     const vertexClueless = { x: 10, y: 290 };     // Bottom left - Clueless
@@ -23,8 +23,8 @@ export const TriangleVisualization = ({ motivated, clueless, hesitant, modificat
 
     return (
         <Paper elevation={4}>
-            <Box sx={{ display: 'flex', justifyContent: 'center', p: 2 }}>
-                <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 4 }}>
+            <Box sx={{ display: "flex", justifyContent: "center", p: 2 }}>
+                <Box sx={{ display: "flex", alignItems: "flex-start", gap: 4 }}>
                     {/* Left: SVG triangle visualization */}
                     <Paper elevation={0} sx={{ p: 1 }}>
                         <svg
@@ -49,19 +49,19 @@ export const TriangleVisualization = ({ motivated, clueless, hesitant, modificat
                                 Hesitant
                             </text>
                             {/* Draw the weighted point */}
-                            <circle cx={point.x} cy={point.y} r="7" fill="red"/>
+                            <circle cx={point.x} cy={point.y} r="7" fill="red" />
                         </svg>
                     </Paper>
 
                     {/* Center: Normalized percentages */}
                     <Box
                         sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            alignItems: 'center',
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "center",
+                            alignItems: "center",
                             gap: 1,
-                            height: '100%'
+                            height: "100%"
                         }}
                     >
                         <Typography variant="h6">
@@ -75,21 +75,27 @@ export const TriangleVisualization = ({ motivated, clueless, hesitant, modificat
                         </Typography>
                     </Box>
 
-                    {/* Right: Modification log */}
-                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                    {/* Right: Reason message */}
+                    <Box sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        gap: 1,
+                        height: "100%"
+                    }}>
                         <Paper elevation={0} sx={{ p: 1 }}>
                             <Typography
-                                variant="h6"
+                                variant="body1"
                                 sx={{
-                                    width: 300,
-                                    height: 300,
-                                    overflowY: 'auto',
+                                    width: 350,
+                                    overflowY: "auto",
                                     p: 1,
-                                    bgcolor: 'background.paper',
-                                    whiteSpace: 'pre-wrap'
+                                    bgcolor: "background.paper",
+                                    whiteSpace: "pre-wrap"
                                 }}
                             >
-                                {modificationLog || "No external modifications yet."}
+                                {reason || "No reason provided."}
                             </Typography>
                         </Paper>
                     </Box>
