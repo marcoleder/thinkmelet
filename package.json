@@ -48,6 +48,7 @@
     "tldraw": "^3.4.1"
   },
   "devDependencies": {
+    "@mui/material": "^6.4.8",
     "@types/base-64": "^1.0.0",
     "@types/node": "^18.11.9",
     "@types/react": "^18.3.3",
