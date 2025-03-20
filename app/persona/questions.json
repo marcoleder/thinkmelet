@@ -1,0 +1,130 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "questionText": "When considering changes in your company, which statement resonates most with you?",
+      "answers": [
+        {
+          "answerText": "I trust our long-standing methods. If something isn't broken, why fix it?",
+          "pullsToPersona": ["Clueless"],
+          "reason": "Indicates reliance on tradition and low openness to innovation."
+        },
+        {
+          "answerText": "I prefer small, safe improvements rather than risky experiments.",
+          "pullsToPersona": ["Hesitant"],
+          "reason": "Reflects risk aversion and gradual implementation."
+        },
+        {
+          "answerText": "If we don’t innovate, we’ll fall behind competitors.",
+          "pullsToPersona": ["Motivated"],
+          "reason": "Suggests proactive thinking about competitiveness and innovation."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "questionText": "How do you usually discover new technologies or industry trends?",
+      "answers": [
+        {
+          "answerText": "Mainly from our existing suppliers or local business partners.",
+          "pullsToPersona": ["Clueless"],
+          "reason": "Reflects limited external engagement with innovation sources."
+        },
+        {
+          "answerText": "Through careful research, industry events, and trusted networks.",
+          "pullsToPersona": ["Motivated"],
+          "reason": "Indicates proactive seeking of innovation opportunities."
+        },
+        {
+          "answerText": "From observing competitors or when a problem becomes obvious.",
+          "pullsToPersona": ["Hesitant"],
+          "reason": "Suggests reactive behavior, driven by external pressures."
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "questionText": "Imagine you find an opportunity to automate parts of your operations. How do you react initially?",
+      "answers": [
+        {
+          "answerText": "Why automate if manual methods are still effective?",
+          "pullsToPersona": ["Clueless"],
+          "reason": "Shows skepticism or lack of awareness about automation's benefits."
+        },
+        {
+          "answerText": "We might test it on a small scale before committing further.",
+          "pullsToPersona": ["Hesitant"],
+          "reason": "Indicates caution and incremental adoption."
+        },
+        {
+          "answerText": "I’d want to quickly understand the benefits, risks, and costs to make an informed decision.",
+          "pullsToPersona": ["Motivated"],
+          "reason": "Demonstrates an analytical, proactive stance."
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "questionText": "When faced with adopting new digital tools, which thought occurs first?",
+      "answers": [
+        {
+          "answerText": "We have managed fine without it; it’s likely unnecessary complexity.",
+          "pullsToPersona": ["Clueless"],
+          "reason": "Reflects reluctance and preference for existing routines."
+        },
+        {
+          "answerText": "Can this clearly pay for itself within a reasonable time frame?",
+          "pullsToPersona": ["Hesitant"],
+          "reason": "Shows financial caution and concern over ROI."
+        },
+        {
+          "answerText": "Could this significantly increase our efficiency or customer satisfaction?",
+          "pullsToPersona": ["Motivated"],
+          "reason": "Indicates strategic focus and readiness to adopt beneficial technologies."
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "questionText": "Which scenario best describes how innovation happens at your company?",
+      "answers": [
+        {
+          "answerText": "Primarily through direct requests from customers or suppliers.",
+          "pullsToPersona": ["Clueless"],
+          "reason": "Implies reactive innovation driven externally rather than strategically."
+        },
+        {
+          "answerText": "We carefully plan pilot projects before wider implementation.",
+          "pullsToPersona": ["Hesitant"],
+          "reason": "Reflects cautious experimentation with innovation."
+        },
+        {
+          "answerText": "We proactively seek innovation projects and regularly evaluate their strategic fit.",
+          "pullsToPersona": ["Motivated"],
+          "reason": "Demonstrates intentional, strategic pursuit of innovation."
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "questionText": "What's your comfort level in collaborating with external partners on innovative projects?",
+      "answers": [
+        {
+          "answerText": "Prefer dealing only with existing, trusted partners.",
+          "pullsToPersona": ["Clueless"],
+          "reason": "Shows reluctance to explore outside trusted networks."
+        },
+        {
+          "answerText": "Open to new partners but only if clearly beneficial and low-risk.",
+          "pullsToPersona": ["Hesitant"],
+          "reason": "Indicates openness with strong risk control."
+        },
+        {
+          "answerText": "Comfortable collaborating widely to stay ahead of the curve.",
+          "pullsToPersona": ["Motivated"],
+          "reason": "Reflects strong openness and eagerness for innovative collaborations."
+        }
+      ]
+    }
+  ]
+}

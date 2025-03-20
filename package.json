@@ -19,6 +19,7 @@
     "@liveblocks/react": "^2.20.0",
     "@liveblocks/react-tiptap": "^2.20.0",
     "@liveblocks/react-ui": "^2.20.0",
+    "@mui/icons-material": "^6.4.8",
     "@radix-ui/react-dialog": "^1.0.2",
     "@radix-ui/react-popover": "^1.0.2",
     "@radix-ui/react-select": "^1.1.1",
@@ -51,8 +52,8 @@
     "tldraw": "^3.4.1"
   },
   "devDependencies": {
-    "@mui/joy": "^5.0.0-beta.52",
     "@mui/material": "^6.4.8",
+    "@mui/joy": "^5.0.0-beta.52",
     "@types/base-64": "^1.0.0",
     "@types/node": "^18.11.9",
     "@types/react": "^18.3.3",
