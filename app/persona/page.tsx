@@ -1,18 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
-import TriangleComponent, { TriangleVisualization } from "@/app/persona/TriangleComponent";
-import {
-    Typography,
-    Button,
-    Card,
-    CardContent,
-    RadioGroup,
-    FormControlLabel,
-    Radio,
-    Box,
-} from "@mui/material";
+import React, {useState} from "react";
+import {TriangleVisualization} from "@/app/persona/TriangleComponent";
+import {Box, Button, Typography,} from "@mui/material";
 import QuizComponent from "@/app/persona/quiz";
+import {askGpt} from "@/app/persona/llmInteraction/LlmInteraction";
 
 export function findPersona() {
     const [motivated, setMotivated] = useState(100);
@@ -85,16 +77,16 @@ export function findPersona() {
     };
 
     return (
-        <Box sx={{ p: 2 }}>
-            <Typography variant="h4" align="center" sx={{ mb: 1 }}>
+        <Box sx={{p: 2}}>
+            <Typography variant="h4" align="center" sx={{mb: 1}}>
                 Persona
             </Typography>
 
             {/* Quiz Component: passes the callback for answer selection */}
-            <QuizComponent onAnswerSelected={handleAnswerSelected} />
+            <QuizComponent onAnswerSelected={handleAnswerSelected}/>
 
             {/* Triangle Visualization: receives the latest persona values and log */}
-            <Button variant="contained" onClick={toggleTriangle} sx={{ my: 2 }}>
+            <Button variant="contained" onClick={toggleTriangle} sx={{my: 2}}>
                 {showTriangle ? "Hide Persona-Finding Process" : "Show Persona-Finding Process"}
             </Button>
             {showTriangle && (
@@ -105,6 +97,8 @@ export function findPersona() {
                     reason={modificationLog}  // passed as the "reason" field
                 />
             )}
+            <Button
+                onClick={async () => console.log(await askGpt(motivated, clueless, hesitant, "I'm so unsure if this is a good idea, but tell me more"))}>Ich mag Züge!</Button>
         </Box>
     );
 }
