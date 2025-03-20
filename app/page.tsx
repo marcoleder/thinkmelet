@@ -4,7 +4,6 @@ import { ComponentProps, ReactNode } from "react";
 import { auth, signIn } from "@/auth";
 import { DASHBOARD_URL } from "@/constants";
 import { SignInIcon } from "@/icons";
-import { MarketingLayout } from "@/layouts/Marketing";
 import { Button, LinkButton } from "@/primitives/Button";
 import { Container } from "@/primitives/Container";
 import styles from "./page.module.css";
@@ -32,7 +31,7 @@ export default async function Index() {
   }
 
   return (
-    <MarketingLayout>
+    <div>
       <Container className={styles.section}>
         <div className={styles.heroInfo}>
           <h1 className={styles.heroTitle}>
@@ -119,6 +118,6 @@ export default async function Index() {
           />
         </div>
       </Container>
-    </MarketingLayout>
+    </div>
   );
 }
