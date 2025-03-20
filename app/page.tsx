@@ -67,7 +67,7 @@ export default async function Index() {
           <Feature
             description={
               <>
-                A collaborative whiteboard app with included share menu,
+                A collaborative app with included share menu,
                 documents listing, users, groups, permissions, and more.
               </>
             }
