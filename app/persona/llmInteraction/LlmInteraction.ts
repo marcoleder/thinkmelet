@@ -1,5 +1,3 @@
-import fetch from "node-fetch";
-
 const constructPrompt = (motivation, clueless, hesitant, interaction) => {
     return {
         context: {
