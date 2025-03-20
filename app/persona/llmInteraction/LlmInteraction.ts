@@ -1,4 +1,4 @@
-const constructPrompt = (motivation, clueless, hesitant, interaction) => {
+const constructPrompt = (motivation: number, clueless: number, hesitant: number, interaction: string) => {
     return {
         context: {
             personas: {
@@ -35,7 +35,7 @@ const constructPrompt = (motivation, clueless, hesitant, interaction) => {
     };
 };
 
-export const askGpt = async (motivation, clueless, hesitant, interaction) => {
+export const askGpt = async (motivation: number, clueless: number, hesitant: number, interaction: string) => {
     const prompt = constructPrompt(motivation, clueless, hesitant, interaction);
 
     // Define the JSON schema for structured output
