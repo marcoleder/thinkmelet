@@ -1,10 +1,10 @@
 "use client";
 
-import React, {useState} from "react";
-import {TriangleVisualization} from "@/app/persona/TriangleComponent";
-import {Box, Button, Typography,} from "@mui/material";
+import React, { useState } from "react";
+import { TriangleVisualization } from "@/app/persona/TriangleComponent";
+import { Box, Button, Typography } from "@mui/material";
 import QuizComponent from "@/app/persona/quiz";
-import {askGpt} from "@/app/persona/llmInteraction/LlmInteraction";
+import { askGpt } from "@/app/persona/llmInteraction/LlmInteraction";
 
 export function findPersona() {
     const [motivated, setMotivated] = useState(100);
@@ -76,18 +76,92 @@ export function findPersona() {
         setModificationLog(newLog);
     };
 
+    // New function to get prompt modifications via the LLM
+    const getPromptModification = async (interaction) => {
+        const response = await askGpt(motivated, clueless, hesitant, interaction);
+        return response;
+    };
+
+    // Function to simulate a prompt interaction and apply modifications
+    const simulatePrompt = async () => {
+        // Sample interaction text; in a real scenario, this might come from user input
+        const interaction = "I would like to explore innovative strategies to boost company growth.";
+
+        // Capture current state values before modification
+        const currentMotivated = motivated;
+        const currentClueless = clueless;
+        const currentHesitant = hesitant;
+        const oldTotal = currentMotivated + currentClueless + currentHesitant;
+        const oldMotivatedPct = oldTotal ? (currentMotivated / oldTotal) * 100 : 0;
+        const oldCluelessPct = oldTotal ? (currentClueless / oldTotal) * 100 : 0;
+        const oldHesitantPct = oldTotal ? (currentHesitant / oldTotal) * 100 : 0;
+
+        const response = await getPromptModification(interaction);
+
+        if (response.change_occurred && response.persona_changed !== "") {
+            const adjustment = response.scale * 2; // Adjust factor for demonstration
+            const reduction = response.scale; // Adjust factor for demonstration
+
+            let newMotivated = currentMotivated;
+            let newClueless = currentClueless;
+            let newHesitant = currentHesitant;
+
+            if (response.persona_changed === "motivated") {
+                newMotivated = currentMotivated + adjustment;
+                newClueless = Math.max(currentClueless - reduction, 0);
+                newHesitant = Math.max(currentHesitant - reduction, 0);
+            } else if (response.persona_changed === "clueless") {
+                newClueless = currentClueless + adjustment;
+                newMotivated = Math.max(currentMotivated - reduction, 0);
+                newHesitant = Math.max(currentHesitant - reduction, 0);
+            } else if (response.persona_changed === "hesitant") {
+                newHesitant = currentHesitant + adjustment;
+                newMotivated = Math.max(currentMotivated - reduction, 0);
+                newClueless = Math.max(currentClueless - reduction, 0);
+            }
+
+            // Calculate new normalized percentages
+            const newTotal = newMotivated + newClueless + newHesitant;
+            const newMotivatedPct = newTotal ? (newMotivated / newTotal) * 100 : 0;
+            const newCluelessPct = newTotal ? (newClueless / newTotal) * 100 : 0;
+            const newHesitantPct = newTotal ? (newHesitant / newTotal) * 100 : 0;
+
+            // Compute changes
+            const deltaMotivated = (newMotivatedPct - oldMotivatedPct).toFixed(0);
+            const deltaClueless = (newCluelessPct - oldCluelessPct).toFixed(0);
+            const deltaHesitant = (newHesitantPct - oldHesitantPct).toFixed(0);
+
+            // Craft the log message in the same format
+            const newLog =
+                `Last change:\n\n` +
+                `Motivated: ${oldMotivatedPct.toFixed(0)}% → ${newMotivatedPct.toFixed(0)}% (Δ ${deltaMotivated}%)\n` +
+                `Clueless: ${oldCluelessPct.toFixed(0)}% → ${newCluelessPct.toFixed(0)}% (Δ ${deltaClueless}%)\n` +
+                `Hesitant: ${oldHesitantPct.toFixed(0)}% → ${newHesitantPct.toFixed(0)}% (Δ ${deltaHesitant}%)\n\n` +
+                `Reasoning: ${response.reason}`;
+
+            // Update state with new values and log
+            setMotivated(newMotivated);
+            setClueless(newClueless);
+            setHesitant(newHesitant);
+            setModificationLog(newLog);
+        } else {
+            // If no change occurred, log the LLM response raw
+            setModificationLog(`LLM response:\n${JSON.stringify(response, null, 2)}`);
+        }
+    };
+
     return (
-        <Box sx={{p: 2}}>
-            <Typography variant="h4" align="center" sx={{mb: 1}}>
+        <Box sx={{ p: 2 }}>
+            <Typography variant="h4" align="center" sx={{ mb: 1 }}>
                 Persona Analysis Quiz
             </Typography>
 
             {/* Quiz Component: passes the callback for answer selection */}
-            <QuizComponent onAnswerSelected={handleAnswerSelected}/>
+            <QuizComponent onAnswerSelected={handleAnswerSelected} />
 
             {/* Triangle Visualization: receives the latest persona values and log */}
-            <Box align={"center"}>
-                <Button variant="contained" onClick={toggleTriangle} sx={{my: 2}}>
+            <Box align="center">
+                <Button variant="contained" onClick={toggleTriangle} sx={{ my: 2 }}>
                     {showTriangle ? "Hide Persona-Finding Process" : "Show Persona-Finding Process"}
                 </Button>
             </Box>
@@ -96,11 +170,12 @@ export function findPersona() {
                     motivated={motivated}
                     clueless={clueless}
                     hesitant={hesitant}
-                    reason={modificationLog}  // passed as the "reason" field
+                    reason={modificationLog} // passed as the "reason" field
                 />
             )}
-            <Button
-                onClick={async () => console.log(await askGpt(motivated, clueless, hesitant, "I'm so unsure if this is a good idea, but tell me more"))}>Ich mag Züge!</Button>
+            <Button onClick={simulatePrompt} variant="contained">
+                Simulate prompt
+            </Button>
         </Box>
     );
 }
