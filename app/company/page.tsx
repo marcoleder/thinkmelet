@@ -15,7 +15,8 @@ import {
     ListItemText,
     Button,
 } from '@mui/material';
-import { useRouter } from 'next/navigation';
+import {redirect, useRouter} from 'next/navigation';
+import {DASHBOARD_URL} from "@/constants";
 
 const industries = [
     "Agriculture", "Automotive", "Banking", "Biotechnology", "Construction",
@@ -88,7 +89,7 @@ export default function CompanyForm() {
     const [geographicalPresence, setGeographicalPresence] = useState('');
 
     const handleRedirect = () => {
-        router.push("/whiteboard/x3eV7JANDYLpUiz6sdLRJ");
+        router.push(DASHBOARD_URL);
     };
 
     return (
