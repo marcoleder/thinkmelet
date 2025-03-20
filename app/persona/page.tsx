@@ -25,7 +25,7 @@ export function findPersona() {
         return stored ? stored : "";
     });
 
-    const [showTriangle, setShowTriangle] = useState(true);
+    const [showTriangle, setShowTriangle] = useState(false);
 
     const toggleTriangle = () => {
         setShowTriangle((prev) => !prev);
