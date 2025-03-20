@@ -36,7 +36,7 @@ export default function PromptInput(insertNote: Function) {
       response_format: {
         type: "json_schema",
         json_schema: {
-          name: "overview Ideas",
+          name: "overview_ideas",
           strict: true,
           schema: jsonSchema,
         },

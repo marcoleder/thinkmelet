@@ -66,10 +66,6 @@ const jsonSchema = {
     "2",
     "3",
     "4",
-    "change_occurred",
-    "persona_changed",
-    "scale",
-    "reason",
   ],
   additionalProperties: false,
 };
