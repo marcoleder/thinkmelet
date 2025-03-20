@@ -26,7 +26,7 @@ export function QuizComponent({ onAnswerSelected }) {
     const currentQuestion = questions[currentQuestionIndex];
 
     return (
-        <Card>
+        <Card elevation={6}>
             <CardContent>
                 <Typography variant="h5" align={"center"} sx={{ mt: 1 }}>
                     {currentQuestion.questionText}

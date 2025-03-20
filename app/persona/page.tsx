@@ -79,16 +79,18 @@ export function findPersona() {
     return (
         <Box sx={{p: 2}}>
             <Typography variant="h4" align="center" sx={{mb: 1}}>
-                Persona
+                Persona Analysis Quiz
             </Typography>
 
             {/* Quiz Component: passes the callback for answer selection */}
             <QuizComponent onAnswerSelected={handleAnswerSelected}/>
 
             {/* Triangle Visualization: receives the latest persona values and log */}
-            <Button variant="contained" onClick={toggleTriangle} sx={{my: 2}}>
-                {showTriangle ? "Hide Persona-Finding Process" : "Show Persona-Finding Process"}
-            </Button>
+            <Box align={"center"}>
+                <Button variant="contained" onClick={toggleTriangle} sx={{my: 2}}>
+                    {showTriangle ? "Hide Persona-Finding Process" : "Show Persona-Finding Process"}
+                </Button>
+            </Box>
             {showTriangle && (
                 <TriangleVisualization
                     motivated={motivated}

@@ -78,7 +78,7 @@ export default function CompanyForm() {
 
     return (
         <Container maxWidth="md">
-            <Typography variant="h4" align={"center"} gutterBottom>
+            <Typography variant="h4" align={"center"} gutterBottom sx={{mt:1}} >
                 Company Analysis Form
             </Typography>
             <Box sx={{ my: 4 }}>

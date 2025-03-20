@@ -22,7 +22,7 @@ export const TriangleVisualization = ({ motivated, clueless, hesitant, reason })
     };
 
     return (
-        <Paper elevation={4}>
+        <Paper elevation={5}>
             <Box sx={{ display: "flex", justifyContent: "center", p: 2 }}>
                 <Box sx={{ display: "flex", alignItems: "flex-start", gap: 4 }}>
                     {/* Left: SVG triangle visualization */}
