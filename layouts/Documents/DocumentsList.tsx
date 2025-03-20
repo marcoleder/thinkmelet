@@ -132,9 +132,7 @@ export function DocumentsList({
         <h1 className={styles.headerTitle}>
           {group?.name ?? capitalize(filter)}
         </h1>
-        <div className={styles.headerActions}>
-          {createDocumentButton}
-        </div>
+        <div className={styles.headerActions}>{createDocumentButton}</div>
       </div>
 
       <div className={styles.container}>
