@@ -1,0 +1,8 @@
+modules = ["nodejs-23", "web"]
+run = "npm run dev"
+
+[nix]
+channel = "stable-24_11"
+
+[deployment]
+run = ["sh", "-c", "npm run dev"]
