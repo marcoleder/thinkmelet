@@ -2,15 +2,15 @@ import { ComponentProps, useState } from "react";
 import { PlusIcon } from "@/icons";
 import { createDocument } from "@/lib/actions";
 import { Button } from "@/primitives/Button";
-import { Popover } from "@/primitives/Popover";
 import { Document, DocumentGroup, DocumentType, DocumentUser } from "@/types";
-import styles from "./DocumentCreatePopover.module.css";
 
-interface Props extends Omit<ComponentProps<typeof Popover>, "content"> {
+interface Props extends Omit<ComponentProps<typeof Button>, "content"> {
   documentName?: Document["name"];
   draft: Document["draft"];
   groupIds?: DocumentGroup["id"][];
   userId: DocumentUser["id"];
+  align?: string;
+  sideOffset?: number;
 }
 
 export function DocumentCreatePopover({
@@ -18,6 +18,8 @@ export function DocumentCreatePopover({
   userId,
   draft,
   children,
+  align,
+  sideOffset,
   ...props
 }: Props) {
   const [disableButtons, setDisableButtons] = useState(false);
@@ -44,45 +46,13 @@ export function DocumentCreatePopover({
   }
 
   return (
-    <Popover
-      content={
-        <div className={styles.popover}>
-          <Button
-            icon={<PlusIcon />}
-            onClick={() => {
-              createNewDocument("Untitled", "text");
-            }}
-            variant="subtle"
-            disabled={disableButtons}
-          >
-            Text
-          </Button>
-          <Button
-            icon={<PlusIcon />}
-            onClick={() => {
-              createNewDocument("Untitled", "whiteboard");
-            }}
-            variant="subtle"
-            disabled={disableButtons}
-          >
-            Whiteboard
-          </Button>
-          <Button
-            icon={<PlusIcon />}
-            onClick={() => {
-              createNewDocument("Untitled", "canvas");
-            }}
-            variant="subtle"
-          >
-            Canvas
-          </Button>
-        </div>
-      }
-      modal
-      side="bottom"
+    <Button
+      icon={<PlusIcon />}
+      onClick={() => createNewDocument("Untitled", "whiteboard")}
+      disabled={disableButtons}
       {...props}
     >
-      {children}
-    </Popover>
+      Thinkboard
+    </Button>
   );
 }
