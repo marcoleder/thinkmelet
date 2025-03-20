@@ -50,31 +50,12 @@ export function DocumentCreatePopover({
           <Button
             icon={<PlusIcon />}
             onClick={() => {
-              createNewDocument("Untitled", "text");
-            }}
-            variant="subtle"
-            disabled={disableButtons}
-          >
-            Text
-          </Button>
-          <Button
-            icon={<PlusIcon />}
-            onClick={() => {
               createNewDocument("Untitled", "whiteboard");
             }}
             variant="subtle"
             disabled={disableButtons}
           >
             Whiteboard
-          </Button>
-          <Button
-            icon={<PlusIcon />}
-            onClick={() => {
-              createNewDocument("Untitled", "canvas");
-            }}
-            variant="subtle"
-          >
-            Canvas
           </Button>
         </div>
       }
