@@ -133,18 +133,6 @@ export function DocumentsList({
           {group?.name ?? capitalize(filter)}
         </h1>
         <div className={styles.headerActions}>
-          <Select
-            initialValue="all"
-            items={[
-              { value: "all", title: "All" },
-              { value: "whiteboard", title: "Whiteboard" },
-            ]}
-            onChange={(value: "all" | DocumentType) => {
-              setDocumentType(value);
-              revalidateDocuments();
-            }}
-            className={styles.headerSelect}
-          />
           {createDocumentButton}
         </div>
       </div>

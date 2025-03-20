@@ -2,11 +2,10 @@ import { ComponentProps, useState } from "react";
 import { PlusIcon } from "@/icons";
 import { createDocument } from "@/lib/actions";
 import { Button } from "@/primitives/Button";
-import { Popover } from "@/primitives/Popover";
 import { Document, DocumentGroup, DocumentType, DocumentUser } from "@/types";
 import styles from "./DocumentCreatePopover.module.css";
 
-interface Props extends Omit<ComponentProps<typeof Popover>, "content"> {
+interface Props extends Omit<ComponentProps<typeof Button>, "content"> {
   documentName?: Document["name"];
   draft: Document["draft"];
   groupIds?: DocumentGroup["id"][];
@@ -44,6 +43,7 @@ export function DocumentCreatePopover({
   }
 
   return (
+<<<<<<< HEAD
     <Popover
       content={
         <div className={styles.popover}>
@@ -61,9 +61,15 @@ export function DocumentCreatePopover({
       }
       modal
       side="bottom"
+=======
+    <Button
+      icon={<PlusIcon />}
+      onClick={() => createNewDocument("Untitled", "whiteboard")}
+      disabled={disableButtons}
+>>>>>>> 813e564 (Assistant checkpoint: Simplify document creation to Thinkboard only)
       {...props}
     >
-      {children}
-    </Popover>
+      Thinkboard
+    </Button>
   );
 }
