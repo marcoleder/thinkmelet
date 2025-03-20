@@ -16,7 +16,9 @@
     "incremental": true,
     "paths": {
       "react": ["./node_modules/@types/react"],
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "~/*": ["LibreChat/client/src/*"]
+
     },
     "plugins": [
       {

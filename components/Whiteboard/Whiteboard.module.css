@@ -1,3 +1,20 @@
+.promptButton {
+  display: inline-block;
+}
+
+.promptInput {
+  display: inline-block;
+  width: 50%;
+}
+
+.promptWrapper {
+  width: 85%;
+  margin: 2% 7% 1% 7%;
+  display: flex;
+  justify-content: left;
+  gap: 3%;
+}
+
 .whiteboardWrapper {
   width: 100vw;
   height: 80vh;

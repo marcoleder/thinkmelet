@@ -14,7 +14,6 @@ import {
   DialogTitle,
   IconButton,
 } from "@mui/material";
-import Typography from "@mui/material/Typography";
 import clsx from "clsx";
 import { nanoid } from "nanoid";
 import { useSession } from "next-auth/react";
@@ -27,7 +26,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { templateNotes } from "@/data/testPromptData";
+import { Cursors } from "../Cursors";
 import { CrossIcon, PlusIcon, RedoIcon, UndoIcon } from "@/icons";
 import { Button } from "@/primitives/Button";
 import { DocumentSpinner } from "@/primitives/Spinner";
@@ -35,10 +34,11 @@ import { Tooltip } from "@/primitives/Tooltip";
 import { Coordinates } from "@/types/coordinates";
 import { Note } from "@/types/note";
 import { useBoundingClientRectRef } from "@/utils";
-import { Cursors } from "../Cursors";
 import { BootstrapDialog } from "./Dialog";
 import { WhiteboardNote } from "./WhiteboardNote";
 import styles from "./Whiteboard.module.css";
+import PromptInput from "@/components/Whiteboard/PromptInput";
+import { templateNotes } from "@/data/testPromptData";
 
 interface Props extends ComponentProps<"div"> {
   currentUser: Liveblocks["UserMeta"]["info"] | null;
@@ -210,7 +210,7 @@ function LiveblocksWhiteboard({
   const [displayedNoteDescription, setDisplayedNoteDescription] =
     useState<string>("");
   //
-  const [isPaning, setIsPaning] = useState(false);
+  const [isPaning, setisPaning] = useState(false);
   const [origin, setOrigin] = useState<Coordinates>({ x: 0, y: 0 });
   const [translate, setTranslate] = useState<Coordinates>({ x: 0, y: 0 });
   const [startTranslate, setStartTranslate] = useState<Coordinates>({
@@ -234,7 +234,7 @@ function LiveblocksWhiteboard({
     if (target.closest("[data-note]") || target.closest(`.${styles.toolbar}`)) {
       return;
     }
-    setIsPaning(true);
+    setisPaning(true);
     setOrigin({ x: event.clientX, y: event.clientY });
     setStartTranslate(translate);
   };
@@ -251,12 +251,8 @@ function LiveblocksWhiteboard({
     });
   };
   //
-  const displayNoteOverlay = () => {
-    console.log("something");
-  };
-  //
   const handleMouseUp = () => {
-    setIsPaning(false);
+    setisPaning(false);
   };
   //
   const handleWheel = useCallback((event: React.WheelEvent) => {
@@ -274,6 +270,7 @@ function LiveblocksWhiteboard({
   //
   return (
     <>
+      <PromptInput />
       <div
         className={clsx(className, styles.whiteboardWrapper)}
         style={{ cursor: isPaning ? "grabbing" : "grab" }}
