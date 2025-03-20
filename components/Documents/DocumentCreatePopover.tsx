@@ -43,30 +43,10 @@ export function DocumentCreatePopover({
   }
 
   return (
-<<<<<<< HEAD
-    <Popover
-      content={
-        <div className={styles.popover}>
-          <Button
-            icon={<PlusIcon />}
-            onClick={() => {
-              createNewDocument("Untitled", "whiteboard");
-            }}
-            variant="subtle"
-            disabled={disableButtons}
-          >
-            Whiteboard
-          </Button>
-        </div>
-      }
-      modal
-      side="bottom"
-=======
     <Button
       icon={<PlusIcon />}
       onClick={() => createNewDocument("Untitled", "whiteboard")}
       disabled={disableButtons}
->>>>>>> 813e564 (Assistant checkpoint: Simplify document creation to Thinkboard only)
       {...props}
     >
       Thinkboard
