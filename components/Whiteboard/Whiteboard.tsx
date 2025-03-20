@@ -270,7 +270,7 @@ function LiveblocksWhiteboard({
   //
   return (
     <>
-      <PromptInput />
+      <PromptInput insertNote={insertNote} />
       <div
         className={clsx(className, styles.whiteboardWrapper)}
         style={{ cursor: isPaning ? "grabbing" : "grab" }}

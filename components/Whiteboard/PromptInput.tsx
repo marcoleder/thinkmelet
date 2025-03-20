@@ -6,7 +6,11 @@ import styles from "./Whiteboard.module.css";
 import { AIGeneratedIdeasOverview } from "@/types/AIGeneratedIdeasOverview";
 import { getSystemPrompt, jsonSchema } from "@/utils/prompt";
 
-export default function PromptInput(insertNote: Function) {
+interface PromptInputProps {
+  insertNote?: (givenNote: Note | undefined) => void;
+}
+
+export const PromptInput: React.FC<PromptInputProps> = ({ insertNote }) => {
   const [inputValue, setInputValue] = React.useState("");
   const urlLlamaEndpoint: string =
     "https://ai.marcoleder.ch/v1/chat/completions";
@@ -76,7 +80,7 @@ export default function PromptInput(insertNote: Function) {
       };
     });
 
-    overviewIdeas.forEach((note) => insertNote(note));
+    overviewIdeas.forEach((note) => insertNote!(note));
   };
   //
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -104,4 +108,6 @@ export default function PromptInput(insertNote: Function) {
       </Button>
     </div>
   );
-}
+};
+
+export default PromptInput;
