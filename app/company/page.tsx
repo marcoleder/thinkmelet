@@ -12,8 +12,10 @@ import {
     MenuItem,
     OutlinedInput,
     Checkbox,
-    ListItemText
+    ListItemText,
+    Button,
 } from '@mui/material';
+import { useRouter } from 'next/navigation';
 
 const industries = [
     "Agriculture", "Automotive", "Banking", "Biotechnology", "Construction",
@@ -41,7 +43,14 @@ const industries = [
     "Veterinary Services", "Small IT Support Businesses", "Sustainable Energy Consulting"
 ];
 
-const companySizes = ['1-10 Employees', '10-100 Employees', '100-1000 Employees', '1000-10\'000 Employees', '10\'000-100\'000 Employees', '>100\'000 Employees'];
+const companySizes = [
+    '1-10 Employees',
+    '10-100 Employees',
+    '100-1000 Employees',
+    '1000-10\'000 Employees',
+    '10\'000-100\'000 Employees',
+    '>100\'000 Employees'
+];
 const revenueRanges = ['<$1M', '$1M-$10M', '$10M-$100M', '>$100M'];
 const profitabilityStatuses = ['Profitable', 'Break-even', 'Loss-making'];
 const marketPositions = ['Market Leader', 'Challenger', 'Niche Player', 'Struggling'];
@@ -66,6 +75,8 @@ const MenuProps = {
 };
 
 export default function CompanyForm() {
+    const router = useRouter();
+
     const [industry, setIndustry] = useState('');
     const [companySize, setCompanySize] = useState('');
     const [revenueRange, setRevenueRange] = useState('');
@@ -76,9 +87,13 @@ export default function CompanyForm() {
     const [customerBase, setCustomerBase] = useState('');
     const [geographicalPresence, setGeographicalPresence] = useState('');
 
+    const handleRedirect = () => {
+        router.push("/whiteboard/x3eV7JANDYLpUiz6sdLRJ");
+    };
+
     return (
         <Container maxWidth="md">
-            <Typography variant="h4" align={"center"} gutterBottom sx={{mt:1}} >
+            <Typography variant="h4" align="center" gutterBottom sx={{ mt: 1 }}>
                 Company Analysis Form
             </Typography>
             <Box sx={{ my: 4 }}>
@@ -249,6 +264,15 @@ export default function CompanyForm() {
                         </FormControl>
                     </Grid>
                 </Grid>
+                <Box align="right">
+                    <Button
+                        variant="contained"
+                        sx={{ my: 2, mx: 3 }}
+                        onClick={handleRedirect}
+                    >
+                        I answered enough
+                    </Button>
+                </Box>
             </Box>
         </Container>
     );

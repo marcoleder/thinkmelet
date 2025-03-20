@@ -44,8 +44,8 @@ export default function Index() {
                     >
                         Learn more
                     </LinkButton>
-                    <img
-                        src="../icons/LMT.svg"
+                    <svg
+                        src="..app/icons/LMT.svg"
                         alt="LMT Logo"
                         style={{ width: "50px", height: "auto" }}
                     />

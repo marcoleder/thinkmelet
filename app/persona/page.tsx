@@ -1,12 +1,16 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { TriangleVisualization } from "@/app/persona/TriangleComponent";
 import { Box, Button, Typography } from "@mui/material";
 import QuizComponent from "@/app/persona/quiz";
 import { askGpt } from "@/app/persona/llmInteraction/LlmInteraction";
+import { useRouter } from "next/navigation";
 
 export function findPersona() {
+    // Initialize the router hook
+    const router = useRouter();
+
     // Initialize state from localStorage if available, otherwise default to 100 or empty string.
     const [motivated, setMotivated] = useState(() => {
         const stored = localStorage.getItem("motivated");
@@ -33,9 +37,9 @@ export function findPersona() {
 
     // Update localStorage whenever any of the tracked states change
     useEffect(() => {
-        localStorage.setItem("motivated", motivated);
-        localStorage.setItem("clueless", clueless);
-        localStorage.setItem("hesitant", hesitant);
+        localStorage.setItem("motivated", motivated.toString());
+        localStorage.setItem("clueless", clueless.toString());
+        localStorage.setItem("hesitant", hesitant.toString());
         localStorage.setItem("modificationLog", modificationLog);
     }, [motivated, clueless, hesitant, modificationLog]);
 
@@ -101,9 +105,12 @@ export function findPersona() {
         return response;
     };
 
+    const handleRedirect = () => {
+        router.push("/company");
+    };
+
     // Function to simulate a prompt interaction and apply modifications
     const simulatePrompt = async (interaction) => {
-
         // Capture current state values before modification
         const currentMotivated = motivated;
         const currentClueless = clueless;
@@ -178,8 +185,19 @@ export function findPersona() {
 
             {/* Triangle Visualization: receives the latest persona values and log */}
             <Box align="center">
-                <Button variant="contained" onClick={toggleTriangle} sx={{ my: 2 }}>
+                <Button
+                    variant="contained"
+                    onClick={toggleTriangle}
+                    sx={{ my: 2, mx: 3 }}
+                >
                     {showTriangle ? "Hide Persona-Finding Process" : "Show Persona-Finding Process"}
+                </Button>
+                <Button
+                    variant="contained"
+                    onClick={handleRedirect}
+                    sx={{ my: 2, mx: 3 }}
+                >
+                    I answered enough
                 </Button>
             </Box>
             {showTriangle && (
@@ -188,7 +206,7 @@ export function findPersona() {
                     clueless={clueless}
                     hesitant={hesitant}
                     reason={modificationLog}
-                    buttonPress={simulatePrompt}// passed as the "reason" field
+                    buttonPress={simulatePrompt} // passed as the "reason" field
                 />
             )}
         </Box>
