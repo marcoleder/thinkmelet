@@ -74,7 +74,9 @@ export function InboxSettingsDialog({ children }: { children: ReactNode }) {
                   onCheckedChange={() =>
                     updateSettings({
                       email: {
-                        $addedToDocument: !(settings.email?.$addedToDocument ?? false),
+                        $addedToDocument: !(
+                          settings.email?.$addedToDocument ?? false
+                        ),
                       },
                     })
                   }
@@ -97,7 +99,9 @@ export function InboxSettingsDialog({ children }: { children: ReactNode }) {
                   checked={settings.email?.textMention ?? false}
                   onCheckedChange={() =>
                     updateSettings({
-                      email: { textMention: !(settings.email?.textMention ?? false) },
+                      email: {
+                        textMention: !(settings.email?.textMention ?? false),
+                      },
                     })
                   }
                   justifyBetween
