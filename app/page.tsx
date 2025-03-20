@@ -67,8 +67,8 @@ export default async function Index() {
           <Feature
             description={
               <>
-                A collaborative app with included share menu,
-                documents listing, users, groups, permissions, and more.
+                A collaborative app with share menu,
+                documents listing, users, groups and permissions.
               </>
             }
             title="Liveblocks"
