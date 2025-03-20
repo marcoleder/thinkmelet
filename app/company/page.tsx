@@ -1,21 +1,21 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
-    Container,
     Box,
-    Grid,
-    Typography,
+    Button,
+    Checkbox,
+    Container,
     FormControl,
+    Grid,
     InputLabel,
-    Select,
+    ListItemText,
     MenuItem,
     OutlinedInput,
-    Checkbox,
-    ListItemText,
-    Button,
+    Select,
+    Typography,
 } from '@mui/material';
-import {redirect, useRouter} from 'next/navigation';
+import {useRouter} from 'next/navigation';
 import {DASHBOARD_URL} from "@/constants";
 
 const industries = [

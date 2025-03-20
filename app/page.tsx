@@ -33,23 +33,30 @@ export default async function Index() {
         <div>
             <Container className={styles.section}>
                 <div className={styles.heroInfo}>
-                    <h1 className={styles.heroTitle}>
-                        Kickstart your collaborative&nbsp;app
-                    </h1>
+                    <h1 className={styles.heroTitle}>Think MeLet</h1>
                     <p className={styles.heroLead}>
-                        Use the Liveblocks Starter Kit to build your document-based
-                        collaborative app in&nbsp;minutes.
+                        An application to foster innovation
+                    </p>
+                    <p className={styles.heroLead}>
+                        in the great St. Gallen region!
                     </p>
                 </div>
                 <div className={styles.heroActions}>
                     <form
                         action={async () => {
                             "use server";
-                            await signIn();
+                            await signIn({ callbackUrl: "/persona" });
                         }}
                     >
                         <Button icon={<SignInIcon />}>Sign in</Button>
                     </form>
+                    <LinkButton
+                        href="https://liveblocks.io/docs/guides/nextjs-starter-kit"
+                        target="_blank"
+                        variant="secondary"
+                    >
+                        Learn more
+                    </LinkButton>
                 </div>
             </Container>
 

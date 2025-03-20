@@ -10,7 +10,7 @@ export default async function SignInPage() {
 
   // If logged in, go to dashboard
   if (session) {
-    redirect(DASHBOARD_URL);
+    redirect("/persona");
   }
 
   const providers = await getProviders();
