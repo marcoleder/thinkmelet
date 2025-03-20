@@ -70,11 +70,11 @@ export function InboxSettingsDialog({ children }: { children: ReactNode }) {
                 <Switch
                   label="Document invites"
                   id="email-invited-to-document"
-                  checked={settings.email.$addedToDocument}
+                  checked={settings.email?.$addedToDocument ?? false}
                   onCheckedChange={() =>
                     updateSettings({
                       email: {
-                        $addedToDocument: !settings.email.$addedToDocument,
+                        $addedToDocument: !(settings.email?.$addedToDocument ?? false),
                       },
                     })
                   }
@@ -83,10 +83,10 @@ export function InboxSettingsDialog({ children }: { children: ReactNode }) {
                 <Switch
                   label="New comments in threads"
                   id="email-thread"
-                  checked={settings.email.thread}
+                  checked={settings.email?.thread ?? false}
                   onCheckedChange={() =>
                     updateSettings({
-                      email: { thread: !settings.email.thread },
+                      email: { thread: !(settings.email?.thread ?? false) },
                     })
                   }
                   justifyBetween
@@ -94,10 +94,10 @@ export function InboxSettingsDialog({ children }: { children: ReactNode }) {
                 <Switch
                   label="New mentions in text documents"
                   id="email-text-mention"
-                  checked={settings.email.textMention}
+                  checked={settings.email?.textMention ?? false}
                   onCheckedChange={() =>
                     updateSettings({
-                      email: { textMention: !settings.email.textMention },
+                      email: { textMention: !(settings.email?.textMention ?? false) },
                     })
                   }
                   justifyBetween
