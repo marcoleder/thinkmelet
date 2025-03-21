@@ -341,15 +341,6 @@ function LiveblocksWhiteboard({
               variant="subtle"
             />
           </Tooltip>
-          <Tooltip content="templates" sideOffset={16}>
-            <Button
-              icon={<PlusIcon />}
-              onClick={() => {
-                templateNotes.forEach((note) => insertNote(note));
-              }}
-              variant="subtle"
-            />
-          </Tooltip>
         </div>
       )}
       <BootstrapDialog
