@@ -10,12 +10,16 @@ import {
   useCallback,
   useRef,
 } from "react";
-import { CheckboxIcon, CrossIcon } from "@/icons";
+import {
+  getDeepDivePrompt,
+  getDeepDiveUserInput,
+  jsonSchemaDeepDive,
+} from "../../utils/prompt";
+import { CrossIcon } from "@/icons";
+import { ExpandIcon } from "@/icons/Expand";
 import { Avatar } from "@/primitives/Avatar";
 import { Button } from "@/primitives/Button";
 import styles from "./WhiteboardNote.module.css";
-import { ExpandIcon } from "@/icons/Expand";
-import { Note } from "@/types/note";
 
 interface Props
   extends Omit<
@@ -32,6 +36,8 @@ interface Props
   showOverlay: Function;
   setOverlayTitle: Function;
   setOverlayText: Function;
+  setParagraphsText: Function;
+  setStepsText: Function;
 }
 
 export const WhiteboardNote = memo(
@@ -48,21 +54,100 @@ export const WhiteboardNote = memo(
     showOverlay,
     setOverlayTitle,
     setOverlayText,
+    setParagraphsText,
+    setStepsText,
     ...props
   }: Props) => {
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
     const note = useStorage((root) => root.notes.get(id));
-
+    const urlLlamaEndpoint: string =
+      "https://api.openai.com/v1/chat/completions";
     const handleDoubleClick = useCallback(() => {
       textAreaRef.current?.focus();
     }, []);
     const expandNote = () => {
+      getDeepDive(title, text);
+      setStepsText("");
+      setParagraphsText("");
       setOverlayTitle(title);
-      console.log("hello there", text);
       setOverlayText(text);
       showOverlay();
     };
 
+    const getDeepDive = async (title: string, text: string) => {
+      const companyProfile = {
+        companySize: localStorage.getItem("companySize") || "",
+        industry: localStorage.getItem("industry") || "",
+        revenueRange: localStorage.getItem("revenueRange") || "",
+        profitability: localStorage.getItem("profitabilityStatus") || "",
+        marketPosition: localStorage.getItem("marketPosition") || "",
+        competitiveLandscape:
+          localStorage.getItem("competitiveLandscape") || "",
+        keyChallenges: localStorage.getItem("keyChallenges") || "",
+        customerBase: localStorage.getItem("customerBase") || "",
+        geographicalPresence:
+          localStorage.getItem("geographicalPresence") || "",
+      };
+      const systemPrompt: string = getDeepDivePrompt(companyProfile);
+      const userPrompt: string = getDeepDiveUserInput(title, text);
+
+      const responseHandler = (dataToParse: any) => {
+        const { paragraphs, next_steps } = dataToParse;
+
+        console.log("paras", paragraphs);
+        console.log("steps", next_steps);
+        const paragraphText = Object.values(paragraphs)
+          .map((paragraph: any) => {
+            return paragraph;
+          })
+          .join("\n\n");
+        setParagraphsText("General Information: " + paragraphText);
+
+
+        const nextStepsText = Object.entries(next_steps)
+          .map((step: any) => {
+            console.log(step);
+            return step[0].replace("_", " ").replace("s", "S") + ": " + step[1];
+          })
+          .join("\n");
+        setStepsText("A starting idea: " + nextStepsText);
+      };
+      const payload = {
+        model: "gpt-4o",
+        messages: [
+          { role: "system", content: systemPrompt },
+          { role: "user", content: JSON.stringify(userPrompt) },
+        ],
+        response_format: {
+          type: "json_schema",
+          json_schema: {
+            name: "deepdive",
+            strict: true,
+            schema: jsonSchemaDeepDive,
+          },
+        },
+        temperature: 0.7, //TODO: maybe in future change
+      };
+
+      const response: Response = await fetch(urlLlamaEndpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer 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`,
+        },
+        body: JSON.stringify(payload),
+      });
+      const data = await response.json();
+      console.log(data);
+      try {
+        const parsedAIIdeasOverViewData = JSON.parse(
+          data.choices[0].message.content
+        );
+        responseHandler(parsedAIIdeasOverViewData);
+      } catch (error) {
+        console.error("failed to parse response as JSON: ", error);
+      }
+    };
     const handleKeyDown = useCallback(
       (event: KeyboardEvent<HTMLTextAreaElement>) => {
         if (event.key === "Escape") {

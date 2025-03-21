@@ -1,13 +1,13 @@
 import Input from "@mui/joy/Input";
 import * as React from "react";
 import { Button } from "@/primitives/Button";
-import { Note } from "@/types/note";
-import styles from "./Whiteboard.module.css";
 import { AIGeneratedIdeasOverview } from "@/types/AIGeneratedIdeasOverview";
+import { Note } from "@/types/note";
 import { getSystemPrompt, jsonSchema } from "@/utils/prompt";
+import styles from "./Whiteboard.module.css";
 
 export interface PromptInputProps {
-  insertNote: (any) => (any);
+  insertNote: (any) => any;
 }
 
 export function getCompanyProfileFromLocalStorage() {
@@ -23,14 +23,12 @@ export function getCompanyProfileFromLocalStorage() {
     geographicalPresence: localStorage.getItem("geographicalPresence") || ""
   };
 
-  console.log(companyProfile);
   return companyProfile;
 }
 
-export default function PromptInput({insertNote}) {
+export default function PromptInput({ insertNote }) {
   const [inputValue, setInputValue] = React.useState("");
-  const urlLlamaEndpoint: string =
-    "https://api.openai.com/v1/chat/completions";
+  const urlLlamaEndpoint: string = "https://api.openai.com/v1/chat/completions";
   //
   const handlePrompt = async () => {
 
@@ -39,6 +37,14 @@ export default function PromptInput({insertNote}) {
     const companyProfile = getCompanyProfileFromLocalStorage();
     const systemPrompt = getSystemPrompt(companyProfile);
 
+    const motivated = parseFloat(localStorage.getItem("motivated")!) || 0;
+    const clueless = parseFloat(localStorage.getItem("clueless")!) || 0;
+    const hesitant = parseFloat(localStorage.getItem("hesitant")!) || 0;
+
+    let calculatedTemperature =
+      (motivated * 0.8 + clueless * 0.5 + hesitant * 0.3) / 300;
+    calculatedTemperature =
+      calculatedTemperature === 0 ? 0.7 : calculatedTemperature;
     const payload = {
       model: "gpt-4o",
       messages: [
@@ -53,7 +59,7 @@ export default function PromptInput({insertNote}) {
           schema: jsonSchema,
         },
       },
-      temperature: 0.7,
+      temperature: calculatedTemperature,
     };
 
     const response: Response = await fetch(urlLlamaEndpoint, {
@@ -77,14 +83,15 @@ export default function PromptInput({insertNote}) {
 
   // Parse the JSON response from the API
   //
-  const handleResponse = (
-      aiIdeasOverviewUnprepared: { [key: string]: AIGeneratedIdeasOverview }
-  ) => {
-    console.log("this check", aiIdeasOverviewUnprepared);
-    const overviewIdeas: Note[] = Object.values(aiIdeasOverviewUnprepared).map((item) => ({
-      title: item.title,
-      text: item.description,
-    }));
+  const handleResponse = (aiIdeasOverviewUnprepared: {
+    [key: string]: AIGeneratedIdeasOverview;
+  }) => {
+    const overviewIdeas: Note[] = Object.values(aiIdeasOverviewUnprepared).map(
+      (item) => ({
+        title: item.title,
+        text: item.description,
+      })
+    );
 
     overviewIdeas.forEach((note) => insertNote(note));
   };

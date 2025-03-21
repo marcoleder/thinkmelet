@@ -1,14 +1,14 @@
 const constructPrompt = (motivation: number, clueless: number, hesitant: number, interaction: string) => {
-    return {
-        context: {
-            personas: {
-                clueless: "He is a pragmatic managing director focused heavily on daily operations rather than strategic growth. Rarely initiating innovation himself, he prefers stability, reliability, and known networks over new ventures. He requires practical, low-risk innovation opportunities clearly demonstrating tangible benefits.",
-                motivated:
-                    "He is a strategic CEO driven by innovation and closely follows technological trends like electromobility and autonomous driving. His perfectionism and high workload sometimes delay initiatives, yet he relies heavily on data-driven decisions and careful planning. Balancing economic viability with sustainability is critical for his company's success.",
-                hesitant:
-                    "He is a cautious, risk-averse CEO who carefully evaluates innovations, favoring incremental changes with clear economic benefits. Skeptical about automation and digitalization, he prioritizes financial stability amid rising competition and price pressures. Reliable partners, evidence of profitability, and gradual integration of new technologies are essential to earning his trust."
-            },
-            current_classification: {
+  return {
+    context: {
+        personas: {
+            clueless: "He is a pragmatic managing director focused heavily on daily operations rather than strategic growth. Rarely initiating innovation himself, he prefers stability, reliability, and known networks over new ventures. He requires practical, low-risk innovation opportunities clearly demonstrating tangible benefits.",
+            motivated:
+                "He is a strategic CEO driven by innovation and closely follows technological trends like electromobility and autonomous driving. His perfectionism and high workload sometimes delay initiatives, yet he relies heavily on data-driven decisions and careful planning. Balancing economic viability with sustainability is critical for his company's success.",
+            hesitant:
+                "He is a cautious, risk-averse CEO who carefully evaluates innovations, favoring incremental changes with clear economic benefits. Skeptical about automation and digitalization, he prioritizes financial stability amid rising competition and price pressures. Reliable partners, evidence of profitability, and gradual integration of new technologies are essential to earning his trust."
+        },
+        current_classification: {
                 motivated: `${motivation}%`,
                 clueless: `${clueless}%`,
                 hesitant: `${hesitant}%`

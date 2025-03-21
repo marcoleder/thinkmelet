@@ -13,6 +13,7 @@ import {
   DialogContent,
   DialogTitle,
   IconButton,
+  Skeleton,
 } from "@mui/material";
 import clsx from "clsx";
 import { nanoid } from "nanoid";
@@ -27,6 +28,9 @@ import React, {
   useState,
 } from "react";
 import { Cursors } from "../Cursors";
+import { BootstrapDialog } from "./Dialog";
+import { WhiteboardNote } from "./WhiteboardNote";
+import PromptInput from "@/components/Whiteboard/PromptInput";
 import { CrossIcon, PlusIcon, RedoIcon, UndoIcon } from "@/icons";
 import { Button } from "@/primitives/Button";
 import { DocumentSpinner } from "@/primitives/Spinner";
@@ -34,11 +38,7 @@ import { Tooltip } from "@/primitives/Tooltip";
 import { Coordinates } from "@/types/coordinates";
 import { Note } from "@/types/note";
 import { useBoundingClientRectRef } from "@/utils";
-import { BootstrapDialog } from "./Dialog";
-import { WhiteboardNote } from "./WhiteboardNote";
 import styles from "./Whiteboard.module.css";
-import PromptInput from "@/components/Whiteboard/PromptInput";
-import { templateNotes } from "@/data/testPromptData";
 
 interface Props extends ComponentProps<"div"> {
   currentUser: Liveblocks["UserMeta"]["info"] | null;
@@ -209,6 +209,8 @@ function LiveblocksWhiteboard({
   const [displayedNoteTitle, setDisplayedNoteTitle] = useState<string>("");
   const [displayedNoteDescription, setDisplayedNoteDescription] =
     useState<string>("");
+  const [displayedParagraphs, setDisplayedParagraphs] = useState<string>("");
+  const [displayedSteps, setDisplayedSteps] = useState<string>("");
   //
   const [isPaning, setisPaning] = useState(false);
   const [origin, setOrigin] = useState<Coordinates>({ x: 0, y: 0 });
@@ -270,7 +272,7 @@ function LiveblocksWhiteboard({
   //
   return (
     <>
-      <PromptInput insertNote={insertNote}/>
+      <PromptInput insertNote={insertNote} />
       <div
         className={clsx(className, styles.whiteboardWrapper)}
         style={{ cursor: isPaning ? "grabbing" : "grab" }}
@@ -311,6 +313,8 @@ function LiveblocksWhiteboard({
                 showOverlay={handleClickOpen}
                 setOverlayTitle={setDisplayedNoteTitle}
                 setOverlayText={setDisplayedNoteDescription}
+                setParagraphsText={setDisplayedParagraphs}
+                setStepsText={setDisplayedSteps}
               />
             ))
           }
@@ -364,9 +368,22 @@ function LiveblocksWhiteboard({
           <CrossIcon />
         </IconButton>
         <DialogContent dividers>{displayedNoteDescription}</DialogContent>
+        {displayedParagraphs != "" ? (
+          <div>
+            <DialogContent dividers>{displayedParagraphs}</DialogContent>
+            <DialogContent dividers>{displayedSteps}</DialogContent>
+          </div>
+        ) : (
+          <div>
+            <Skeleton />
+            <Skeleton animation="wave" />
+            <Skeleton animation={false} />
+          </div>
+        )}
+
         <DialogActions>
           <Button autoFocus onClick={handleClose}>
-            Save changes
+            close
           </Button>
         </DialogActions>
       </BootstrapDialog>
