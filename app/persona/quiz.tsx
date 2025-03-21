@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { Card, CardContent, Button, Typography, Box } from "@mui/material";
 import questionsData from "./questions.json"; // Ensure the correct path
 
-export function QuizComponent({ onAnswerSelected }) {
+export function QuizComponent({ onAnswerSelected }: {onAnswerSelected: any} ) {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const questions = questionsData.questions;
 
-    const handleAnswerClick = (answer) => {
+    const handleAnswerClick = (answer: any) => {
         // Send the answer details to the parent component
         if (onAnswerSelected) {
             onAnswerSelected({

@@ -18,7 +18,7 @@ export function Providers({
   session: Session | null;
 }) {
   return (
-    <SessionProvider session={session}>
+    <SessionProvider session={session as Session | null | undefined}>
       <LiveblocksProvider
         // Using a custom callback that calls our API
         // In this API we'll assign each user custom data, such as names, avatars

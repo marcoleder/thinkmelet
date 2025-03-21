@@ -45,7 +45,7 @@ export default async function Index() {
                     <form
                         action={async () => {
                             "use server";
-                            await signIn({ callbackUrl: "/persona" });
+                            await signIn('google', { callbackUrl: "/persona" });
                         }}
                     >
                         <Button icon={<SignInIcon />}>Sign in</Button>

@@ -7,7 +7,7 @@ import QuizComponent from "@/app/persona/quiz";
 import { askGpt } from "@/app/persona/llmInteraction/LlmInteraction";
 import { useRouter } from "next/navigation";
 
-export function findPersona() {
+const findPersona = ()=> {
     // Initialize the router hook
     const router = useRouter();
 
@@ -43,7 +43,7 @@ export function findPersona() {
         localStorage.setItem("modificationLog", modificationLog);
     }, [motivated, clueless, hesitant, modificationLog]);
 
-    const handleAnswerSelected = (answer) => {
+    const handleAnswerSelected = (answer: any) => {
         // Define adjustment values
         const adjustment = 20;
         const reduction = 10;
@@ -100,7 +100,7 @@ export function findPersona() {
     };
 
     // New function to get prompt modifications via the LLM
-    const getPromptModification = async (interaction) => {
+    const getPromptModification = async (interaction: any) => {
         const response = await askGpt(motivated, clueless, hesitant, interaction);
         return response;
     };
@@ -110,7 +110,7 @@ export function findPersona() {
     };
 
     // Function to simulate a prompt interaction and apply modifications
-    const simulatePrompt = async (interaction) => {
+    const simulatePrompt = async (interaction: any) => {
         // Capture current state values before modification
         const currentMotivated = motivated;
         const currentClueless = clueless;
@@ -184,7 +184,7 @@ export function findPersona() {
             <QuizComponent onAnswerSelected={handleAnswerSelected} />
 
             {/* Triangle Visualization: receives the latest persona values and log */}
-            <Box align="center">
+            <Box sx={{ textAlign: 'center' }}>
                 <Button
                     variant="contained"
                     onClick={toggleTriangle}

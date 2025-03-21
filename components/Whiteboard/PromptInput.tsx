@@ -5,11 +5,17 @@ import { Note } from "@/types/note";
 import styles from "./Whiteboard.module.css";
 import { AIGeneratedIdeasOverview } from "@/types/AIGeneratedIdeasOverview";
 import { getSystemPrompt, jsonSchema } from "@/utils/prompt";
+import { useMutation } from "@liveblocks/react/suspense";
+import { nanoid } from "nanoid";
+import { LiveObject } from "@liveblocks/client";
 
-export default function PromptInput(insertNote: Function) {
+export default function PromptInput() {
   const [inputValue, setInputValue] = React.useState("");
   const urlLlamaEndpoint: string =
     "https://ai.marcoleder.ch/v1/chat/completions";
+  //
+  let xSpawnCoordinate = -300;
+  let ySpawnCoordinate = 50;
   //
   const handlePrompt = async () => {
     //create prompt with other infos
@@ -49,6 +55,7 @@ export default function PromptInput(insertNote: Function) {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer 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`,
+        "Access-Control-Allow-Origin": "*",
       },
       body: JSON.stringify(payload),
     });
@@ -64,6 +71,33 @@ export default function PromptInput(insertNote: Function) {
   };
 
   // Parse the JSON response from the API
+  //
+  const insertNote = useMutation(({ storage, self }, givenNote?: Note) => {
+    if (!self.canWrite) {
+      return;
+    }
+    xSpawnCoordinate += 400;
+    if (xSpawnCoordinate > 1300) {
+      xSpawnCoordinate = 100;
+      xSpawnCoordinate += getRandomInt(120);
+      ySpawnCoordinate += 120;
+      if (ySpawnCoordinate > 410) {
+        ySpawnCoordinate = 50;
+        ySpawnCoordinate += getRandomInt(30);
+      }
+    }
+
+    const noteId = nanoid();
+    const note = new LiveObject({
+      x: xSpawnCoordinate,
+      y: ySpawnCoordinate,
+      title: givenNote?.title ? givenNote?.title : "",
+      text: givenNote?.text ? givenNote?.text : "",
+      selectedBy: null,
+      id: noteId,
+    });
+    storage.get("notes").set(noteId, note);
+  }, []);
   //
   const handleResponse = (
     aiIdeasOverviewUnprepared: AIGeneratedIdeasOverview[]
@@ -104,4 +138,8 @@ export default function PromptInput(insertNote: Function) {
       </Button>
     </div>
   );
+}
+
+function getRandomInt(max: number) {
+  return Math.floor(Math.random() * max);
 }

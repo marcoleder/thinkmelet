@@ -84,7 +84,7 @@ export default function CompanyForm() {
     const [profitabilityStatus, setProfitabilityStatus] = useState('');
     const [marketPosition, setMarketPosition] = useState('');
     const [competitiveLandscape, setCompetitiveLandscape] = useState('');
-    const [keyChallenges, setKeyChallenges] = useState([]);
+    const [keyChallenges, setKeyChallenges] = useState('');
     const [customerBase, setCustomerBase] = useState('');
     const [geographicalPresence, setGeographicalPresence] = useState('');
 
@@ -212,11 +212,10 @@ export default function CompanyForm() {
                         <FormControl fullWidth>
                             <InputLabel>Key Challenges</InputLabel>
                             <Select
-                                multiple
                                 value={keyChallenges}
                                 onChange={(e) => setKeyChallenges(e.target.value)}
                                 input={<OutlinedInput label="Key Challenges" />}
-                                renderValue={(selected) => selected.join(', ')}
+                                renderValue={(selected) => selected}
                                 MenuProps={MenuProps}
                             >
                                 {keyChallengesOptions.map((option) => (
@@ -265,7 +264,7 @@ export default function CompanyForm() {
                         </FormControl>
                     </Grid>
                 </Grid>
-                <Box align="right">
+                <Box sx={{ textAlign: 'right' }}>
                     <Button
                         variant="contained"
                         sx={{ my: 2, mx: 3 }}

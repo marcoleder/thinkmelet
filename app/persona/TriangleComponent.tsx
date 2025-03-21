@@ -19,7 +19,7 @@ export const TriangleVisualization = ({
                                           hesitant,
                                           reason,
                                           buttonPress,
-                                      }) => {
+                                      } :{motivated: any, clueless: any, hesitant: any, reason: any, buttonPress: any}) => {
     // Define the vertices of an equilateral triangle (SVG coordinates)
     const vertexMotivated = {x: 150, y: 10}; // Top vertex - Motivated
     const vertexClueless = {x: 10, y: 290}; // Bottom left - Clueless
