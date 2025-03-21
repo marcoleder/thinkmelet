@@ -6,10 +6,14 @@ import styles from "./Whiteboard.module.css";
 import { AIGeneratedIdeasOverview } from "@/types/AIGeneratedIdeasOverview";
 import { getSystemPrompt, jsonSchema } from "@/utils/prompt";
 
-export default function PromptInput(insertNote: Function) {
+export interface PromptInputProps {
+  insertNote: (any) => (any);
+}
+
+export default function PromptInput({insertNote}) {
   const [inputValue, setInputValue] = React.useState("");
   const urlLlamaEndpoint: string =
-    "https://ai.marcoleder.ch/v1/chat/completions";
+    "https://api.openai.com/v1/chat/completions";
   //
   const handlePrompt = async () => {
     //create prompt with other infos
@@ -28,7 +32,7 @@ export default function PromptInput(insertNote: Function) {
     const systemPrompt = getSystemPrompt(companyProfile);
 
     const payload = {
-      model: "gemma-3-27b-it",
+      model: "gpt-4o",
       messages: [
         { role: "system", content: systemPrompt },
         { role: "user", content: JSON.stringify(userPrompt) },
@@ -66,18 +70,17 @@ export default function PromptInput(insertNote: Function) {
   // Parse the JSON response from the API
   //
   const handleResponse = (
-    aiIdeasOverviewUnprepared: AIGeneratedIdeasOverview[]
+      aiIdeasOverviewUnprepared: { [key: string]: AIGeneratedIdeasOverview }
   ) => {
     console.log("this check", aiIdeasOverviewUnprepared);
-    const overviewIdeas: Note[] = aiIdeasOverviewUnprepared.map((item) => {
-      return {
-        title: item.title,
-        text: item.description,
-      };
-    });
+    const overviewIdeas: Note[] = Object.values(aiIdeasOverviewUnprepared).map((item) => ({
+      title: item.title,
+      text: item.description,
+    }));
 
     overviewIdeas.forEach((note) => insertNote(note));
   };
+
   //
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);

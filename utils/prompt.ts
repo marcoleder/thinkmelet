@@ -27,9 +27,11 @@ const getSystemPrompt = (companyProfile: CompanyProfile) => {
 };
 const jsonSchema = {
   type: "object",
+  additionalProperties: false, // disallows additional top-level properties
   properties: {
     "1": {
       type: "object",
+      additionalProperties: false, // disallows extra properties in object "1"
       properties: {
         title: { type: "string" },
         description: { type: "string" },
@@ -38,6 +40,7 @@ const jsonSchema = {
     },
     "2": {
       type: "object",
+      additionalProperties: false,
       properties: {
         title: { type: "string" },
         description: { type: "string" },
@@ -46,6 +49,7 @@ const jsonSchema = {
     },
     "3": {
       type: "object",
+      additionalProperties: false,
       properties: {
         title: { type: "string" },
         description: { type: "string" },
@@ -54,6 +58,7 @@ const jsonSchema = {
     },
     "4": {
       type: "object",
+      additionalProperties: false,
       properties: {
         title: { type: "string" },
         description: { type: "string" },
@@ -61,14 +66,9 @@ const jsonSchema = {
       required: ["title", "description"],
     },
   },
-  required: [
-    "1",
-    "2",
-    "3",
-    "4",
-  ],
-  additionalProperties: false,
+  required: ["1", "2", "3", "4"],
 };
+
 
 export { jsonSchema };
 export { getSystemPrompt };
