@@ -10,25 +10,33 @@ export interface PromptInputProps {
   insertNote: (any) => (any);
 }
 
+export function getCompanyProfileFromLocalStorage() {
+  const companyProfile = {
+    companySize: localStorage.getItem("companySize") || "",
+    industry: localStorage.getItem("industry") || "",
+    revenueRange: localStorage.getItem("revenueRange") || "",
+    profitability: localStorage.getItem("profitabilityStatus") || "",
+    marketPosition: localStorage.getItem("marketPosition") || "",
+    competitiveLandscape: localStorage.getItem("competitiveLandscape") || "",
+    keyChallenges: localStorage.getItem("keyChallenges") || "",
+    customerBase: localStorage.getItem("customerBase") || "",
+    geographicalPresence: localStorage.getItem("geographicalPresence") || ""
+  };
+
+  console.log(companyProfile);
+  return companyProfile;
+}
+
 export default function PromptInput({insertNote}) {
   const [inputValue, setInputValue] = React.useState("");
   const urlLlamaEndpoint: string =
     "https://api.openai.com/v1/chat/completions";
   //
   const handlePrompt = async () => {
+
     //create prompt with other infos
     const userPrompt: String = inputValue;
-    const companyProfile = {
-      companySize: "big",
-      industry: "computer science",
-      revenueRange: "2 million dollar",
-      profitability: "very high",
-      marketPosition: "market leader",
-      competitiveLandscape: "not at all",
-      keyChallenges: "getting rich",
-      customerBase: "non existent",
-      geographicalPresence: "only switzerland",
-    };
+    const companyProfile = getCompanyProfileFromLocalStorage();
     const systemPrompt = getSystemPrompt(companyProfile);
 
     const payload = {

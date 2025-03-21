@@ -106,7 +106,11 @@ export default function CompanyForm() {
                             <Select
                                 value={industry}
                                 label="Industry"
-                                onChange={(e) => setIndustry(e.target.value)}
+                                onChange={(e) => {
+                                    const value = e.target.value;
+                                    setIndustry(value);
+                                    localStorage.setItem("companySize", value);
+                                }}
                             >
                                 {industries.map((option) => (
                                     <MenuItem key={option} value={option}>
@@ -124,7 +128,11 @@ export default function CompanyForm() {
                             <Select
                                 value={companySize}
                                 label="Company Size"
-                                onChange={(e) => setCompanySize(e.target.value)}
+                                onChange={(e) => {
+                                    const value = e.target.value;
+                                    setCompanySize(value)
+                                    localStorage.setItem("companySize", value);
+                                }}
                             >
                                 {companySizes.map((option) => (
                                     <MenuItem key={option} value={option}>
@@ -142,7 +150,11 @@ export default function CompanyForm() {
                             <Select
                                 value={revenueRange}
                                 label="Revenue Range"
-                                onChange={(e) => setRevenueRange(e.target.value)}
+                                onChange={(e) => {
+                                    const value = e.target.value;
+                                    setRevenueRange(value);
+                                    localStorage.setItem("revenueRange", value);
+                                }}
                             >
                                 {revenueRanges.map((option) => (
                                     <MenuItem key={option} value={option}>
@@ -160,7 +172,11 @@ export default function CompanyForm() {
                             <Select
                                 value={profitabilityStatus}
                                 label="Profitability Status"
-                                onChange={(e) => setProfitabilityStatus(e.target.value)}
+                                onChange={(e) => {
+                                    const value = e.target.value;
+                                    setProfitabilityStatus(value);
+                                    localStorage.setItem("profitabilityStatus", value);
+                                }}
                             >
                                 {profitabilityStatuses.map((option) => (
                                     <MenuItem key={option} value={option}>
@@ -178,7 +194,11 @@ export default function CompanyForm() {
                             <Select
                                 value={marketPosition}
                                 label="Market Position"
-                                onChange={(e) => setMarketPosition(e.target.value)}
+                                onChange={(e) => {
+                                    const value = e.target.value;
+                                    setMarketPosition(value);
+                                    localStorage.setItem("marketPosition", value);
+                                }}
                             >
                                 {marketPositions.map((option) => (
                                     <MenuItem key={option} value={option}>
@@ -196,7 +216,11 @@ export default function CompanyForm() {
                             <Select
                                 value={competitiveLandscape}
                                 label="Competitive Landscape"
-                                onChange={(e) => setCompetitiveLandscape(e.target.value)}
+                                onChange={(e) => {
+                                    const value = e.target.value;
+                                    setCompetitiveLandscape(value);
+                                    localStorage.setItem("competitiveLandscape", value);
+                                }}
                             >
                                 {competitiveLandscapes.map((option) => (
                                     <MenuItem key={option} value={option}>
@@ -214,7 +238,11 @@ export default function CompanyForm() {
                             <Select
                                 multiple
                                 value={keyChallenges}
-                                onChange={(e) => setKeyChallenges(e.target.value)}
+                                onChange={(e) => {
+                                    const value = e.target.value;
+                                    setKeyChallenges(value);
+                                    localStorage.setItem("keyChallenges", value);
+                                }}
                                 input={<OutlinedInput label="Key Challenges" />}
                                 renderValue={(selected) => selected.join(', ')}
                                 MenuProps={MenuProps}
@@ -236,7 +264,11 @@ export default function CompanyForm() {
                             <Select
                                 value={customerBase}
                                 label="Customer Base"
-                                onChange={(e) => setCustomerBase(e.target.value)}
+                                onChange={(e) => {
+                                    const value = e.target.value;
+                                    setCustomerBase(value);
+                                    localStorage.setItem("customerBase", value);
+                                }}
                             >
                                 {customerBases.map((option) => (
                                     <MenuItem key={option} value={option}>
@@ -254,7 +286,11 @@ export default function CompanyForm() {
                             <Select
                                 value={geographicalPresence}
                                 label="Geographical Presence"
-                                onChange={(e) => setGeographicalPresence(e.target.value)}
+                                onChange={(e) => {
+                                    const value = e.target.value;
+                                    setGeographicalPresence(value);
+                                    localStorage.setItem("geographicalPresence", value);
+                                }}
                             >
                                 {geographicalPresences.map((option) => (
                                     <MenuItem key={option} value={option}>
